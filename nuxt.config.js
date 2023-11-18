@@ -21,6 +21,7 @@ export default {
   plugins: [
     { src: "~plugins/antd-ui.js", ssr: false },
     { src: "~plugins/quill-editor.js", ssr: false },
+    { src: '~/plugins/ymapPlugin.js',  mode: 'client' }
   ],
   ssr: false,
   // Auto import components: https://go.nuxtjs.dev/config-components

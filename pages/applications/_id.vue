@@ -366,7 +366,7 @@
             </div>
             <div class="grid grid-cols-1 w-full">
               <a-form-model-item
-                prop="deadline"
+                prop="address.uz"
                 class="form-item w-full mb-0"
                 label="Tashkilot manzili (O‘Z)"
               >
@@ -375,7 +375,7 @@
             </div>
             <div class="grid grid-cols-1 w-full">
               <a-form-model-item
-                prop="deadline"
+                prop="address.ru"
                 class="form-item w-full mb-0"
                 label="Tashkilot manzili (RU)"
               >
@@ -384,7 +384,7 @@
             </div>
             <div class="grid grid-cols-1 w-full">
               <a-form-model-item
-                prop="deadline"
+                prop="address.en"
                 class="form-item w-full mb-0"
                 label="Tashkilot manzili (EN)"
               >
@@ -393,25 +393,72 @@
             </div>
             <div class="grid grid-cols-2 gap-6">
               <a-form-model-item
-                prop="deadline"
+                prop="name"
+                class="form-item w-full mb-0"
+                label="Xostel nomi"
+              >
+                <a-input v-model="form.name" placeholder="Lokomotiv hostel" />
+              </a-form-model-item>
+              <a-form-model-item
+                prop="region_id"
+                class="form-item w-full mb-0"
+                label="Xostel joylashgan hudud"
+              >
+                <a-select
+                  v-model="form.region_id"
+                  placeholder="Toshkent shahri"
+                  class="w-full"
+                >
+                  <a-select-option
+                    :value="region?.id"
+                    v-for="region in regions"
+                    :key="region?.id"
+                  >
+                    {{ region?.name?.ru }}</a-select-option
+                  >
+                </a-select>
+              </a-form-model-item>
+            </div>
+            <div class="grid grid-cols-2 gap-6">
+              <a-form-model-item
+                prop="lat"
                 class="form-item w-full mb-0"
                 label="Xaritada joylashuv uzunlik nuqtasi"
               >
-                <a-input v-model="form.lat" placeholder="Uzunlik nuqtasini kiriting" />
+                <a-input
+                  type="number"
+                  v-model="form.lat"
+                  @change="currentLatLon"
+                  placeholder="Uzunlik nuqtasini kiriting"
+                />
               </a-form-model-item>
               <a-form-model-item
-                prop="deadline"
+                prop="lon"
                 class="form-item w-full mb-0"
                 label="Xaritada joylashuv kenglik nuqtasi"
               >
-                <a-input v-model="form.lon" placeholder="Kenglik nuqtasini kiriting" />
+                <a-input
+                  type="number"
+                  v-model="form.lon"
+                  @change="currentLatLon"
+                  placeholder="Kenglik nuqtasini kiriting"
+                />
               </a-form-model-item>
             </div>
           </div>
         </a-form-model>
       </div>
-      <div class="map">
-        <iframe
+      <div class="map min-h-[700px]">
+        <yandex-map
+          @click="onClick"
+          :coords="coords"
+          :zoom="10"
+          style="height: 700px"
+          class="min-h-[700px]"
+        >
+          <ymap-marker :coords="coords" marker-id="123" hint-content="some hint" />
+        </yandex-map>
+        <!-- <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.152394473258!2d69.24323909041384!3d41.32729942574873!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b711d027053%3A0x2ec050777a5a6873!2z0JPQsNC90LPQsA!5e0!3m2!1sru!2s!4v1700216322446!5m2!1sru!2s"
           class="w-full"
           height="700"
@@ -419,7 +466,7 @@
           allowfullscreen=""
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
+        ></iframe> -->
       </div>
       <div class="buttons flex justify-center gap-6">
         <button
@@ -428,6 +475,7 @@
           Rad etish
         </button>
         <button
+          @click="submit"
           class="py-[13px] w-[366px] rounded-[8px] text-white bg-blue-bold font-[verdana-400] text-base uppercase flex justify-center"
         >
           Tasdiqlash va reyestrga kiritish
@@ -486,17 +534,33 @@
 export default {
   data() {
     return {
+      coords: [41.311081, 69.240562],
+      regions: [],
       form: {},
       rules: {},
       text: "",
       sort: undefined,
       visible: false,
       info: {},
+      rules: {
+        lat: [{ required: true, message: "This field is required", trigger: "change" }],
+        lon: [{ required: true, message: "This field is required", trigger: "change" }],
+        name: [{ required: true, message: "This field is required", trigger: "change" }],
+        status: [
+          { required: true, message: "This field is required", trigger: "change" },
+        ],
+        address: {
+          ru: [{ required: true, message: "This field is required", trigger: "change" }],
+          uz: [{ required: true, message: "This field is required", trigger: "change" }],
+          en: [{ required: true, message: "This field is required", trigger: "change" }],
+        },
+      },
       form: {
+        name: "",
         lat: "",
         lon: "",
         status: "",
-        region_id: null,
+        region_id: undefined,
         address: {
           ru: "",
           en: "",
@@ -507,10 +571,33 @@ export default {
   },
   mounted() {
     this.__GET_APPLICATIONS(this.$route.params.id);
+    this.__GET_REGIONS();
   },
   methods: {
     handleOk() {
       this.visible = false;
+    },
+    submit() {
+      this.$refs.ruleForm.validate((valid) => {
+        if (valid) {
+          this.__EDIT_APPLICATIONS(this.form);
+        } else {
+        }
+      });
+    },
+    onClick(e) {
+      this.coords = e.get("coords");
+      this.form.lat = this.coords[0];
+      this.form.lon = this.coords[1];
+    },
+    currentLatLon() {
+      this.coords = [this.form.lat, this.form.lon];
+    },
+    async __GET_REGIONS() {
+      try {
+        const data = await this.$store.dispatch("fetchRegions/getRegions");
+        this.regions = data.data.data;
+      } catch (e) {}
     },
     handleChange(info) {
       const status = info.file.status;
@@ -529,9 +616,10 @@ export default {
         this.form.address = data?.data?.address;
         this.form.lat = data?.data?.lat;
         this.form.lon = data?.data?.lon;
-        this.form.status = data?.data?.application_status;
+        this.form.status = data?.data?.status;
+        this.form.name = data?.data?.name;
         this.form.region_id = data?.data?.region?.id;
-        
+
         this.info = data?.data;
         this.title = { ...data?.data?.name };
       } catch (e) {}
@@ -539,16 +627,14 @@ export default {
     async __EDIT_APPLICATIONS(form) {
       try {
         const data = await this.$store.dispatch("fetchHotels/editHotels", {
-          id: this.editId,
+          id: this.$route.params.id,
           data: form,
         });
-        this.__GET_APPLICATIONSS();
-        this.editId = null;
-        this.visible = false;
         this.$notification["success"]({
           message: "Success",
           description: "Успешно изменен",
         });
+        this.$router.go(-1);
       } catch (e) {
         this.$notification["error"]({
           message: "Error",
@@ -561,6 +647,9 @@ export default {
 </script>
 <style lang="css" scoped>
 /* form  */
+.form-item :deep(label::before) {
+  display: none;
+}
 .form-item :deep(label) {
   font-family: var(--v-regular);
   color: #000;
