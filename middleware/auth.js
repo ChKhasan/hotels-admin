@@ -1,14 +1,14 @@
-export default function ({ redirect, $axios,store }) {
+export default async function ({ redirect, $axios, store }) {
   try {
-    $axios.$get(`/me`, {
+    const data = await $axios.$get(`/me`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
-    }).then(data => {
-      store.commit('profileInfo',data?.data)
     });
 
+    store.commit("profileInfo", data?.data);
   } catch (e) {
+    console.log(e);
     localStorage.removeItem("auth_token");
     redirect("/admin/login");
   }
