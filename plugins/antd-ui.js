@@ -24,8 +24,9 @@ import {
   Popover,
   Alert,
   Badge,
+  notification,
 } from "ant-design-vue";
-
+Vue.prototype.$notification = notification;
 Vue.use(Badge);
 Vue.use(Alert);
 Vue.use(FormModel);

@@ -7,7 +7,7 @@
           @click="$router.push('/information')"
           class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
         >
-          Viloyatlar 
+          Viloyatlar
         </button>
         <button
           :class="{ 'bg-blue-bold text-white': $route.name == 'information-additional' }"
@@ -89,18 +89,18 @@
           </span>
         </span>
         <span slot="name_ru" slot-scope="text">
-          {{ text?.name?.ru }}
+          {{ text?.value?.ru }}
         </span>
         <span slot="name_uz" slot-scope="text">
-          {{ text?.name?.uz }}
+          {{ text?.value?.uz }}
         </span>
         <span slot="name_en" slot-scope="text">
-          {{ text?.name?.en }}
+          {{ text?.value?.en }}
         </span>
       </a-table>
     </div>
     <div class="mt-10">
-      <VPagination @getData="__GET_REGIONS" :totalPage="totalPage" />
+      <VPagination @getData="__GET_TRANSLATIONS" :totalPage="totalPage" />
     </div>
     <a-modal
       class="close-modal"
@@ -124,10 +124,19 @@
                 <a-form-model-item
                   prop="deadline"
                   class="form-item w-full mb-0"
+                  label="KALIT SO'Z"
+                >
+                  <a-input v-model="form.key" placeholder="Kalit so'zni kiriting" />
+                </a-form-model-item>
+              </div>
+              <div class="grid grid-cols-1 w-full">
+                <a-form-model-item
+                  prop="deadline"
+                  class="form-item w-full mb-0"
                   label="O‘Z"
                 >
                   <a-input
-                    v-model="form.name.uz"
+                    v-model="form.value.uz"
                     placeholder="Klassifikatorning o‘zbekcha nomini kiriting"
                   />
                 </a-form-model-item>
@@ -139,7 +148,7 @@
                   label="RU"
                 >
                   <a-input
-                    v-model="form.name.ru"
+                    v-model="form.value.ru"
                     placeholder="Klassifikatorning ruscha nomini kiriting"
                   />
                 </a-form-model-item>
@@ -151,7 +160,7 @@
                   label="EN"
                 >
                   <a-input
-                    v-model="form.name.en"
+                    v-model="form.value.en"
                     placeholder="Klassifikatorning inglizcha nomini kiriting"
                   />
                 </a-form-model-item>
@@ -232,7 +241,8 @@ export default {
 
       regions: [],
       form: {
-        name: {
+        key: "",
+        value: {
           ru: "",
           en: "",
           uz: "",
@@ -241,7 +251,7 @@ export default {
     };
   },
   mounted() {
-    this.__GET_REGIONS();
+    this.__GET_TRANSLATIONS();
   },
   methods: {
     handleOk() {
@@ -250,15 +260,15 @@ export default {
     editData(id) {
       this.visible = true;
       this.editId = id;
-      this.__GET_REGION(id);
+      this.__GET_TRANSLATION(id);
     },
     submit() {
-      this.__EDIT_REGION(this.form);
+      this.__EDIT_TRANSLATIONS(this.form);
     },
-    async __GET_REGIONS() {
+    async __GET_TRANSLATIONS() {
       try {
         this.loading = true;
-        const data = await this.$store.dispatch("fetchRegions/getRegions", {
+        const data = await this.$store.dispatch("fetchTranslations/getTranslations", {
           page: 1,
           page_size: 16,
           ...this.$route.query,
@@ -273,21 +283,25 @@ export default {
         this.loading = false;
       } catch (e) {}
     },
-    async __GET_REGION(id) {
+    async __GET_TRANSLATION(id) {
       try {
-        const data = await this.$store.dispatch("fetchRegions/getRegionsById", id);
-        this.form.name = data?.data?.name;
-        this.title = { ...data?.data?.name };
+        const data = await this.$store.dispatch(
+          "fetchTranslations/getTranslationsById",
+          id
+        );
+        this.form.value = data?.data?.value;
+        this.form.key = data?.data?.key;
+        this.title = { ...data?.data?.value };
       } catch (e) {}
     },
 
-    async __EDIT_REGION(form) {
+    async __EDIT_TRANSLATIONS(form) {
       try {
-        const data = await this.$store.dispatch("fetchRegions/editRegions", {
+        const data = await this.$store.dispatch("fetchTranslations/editTranslations", {
           id: this.editId,
           data: form,
         });
-        this.__GET_REGIONS();
+        this.__GET_TRANSLATIONS();
         this.editId = null;
         this.visible = false;
         this.$notification["success"]({
@@ -302,7 +316,6 @@ export default {
       }
     },
   },
-
   components: {
     VPagination,
   },

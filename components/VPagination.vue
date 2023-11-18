@@ -2,6 +2,8 @@
   <div class="pagination flex justify-between">
     <div class="buttons flex gap-6">
       <button
+        @click="prevPage"
+        :class="{ 'opacity-10 pointer-events-none': current == 1 }"
         class="flex gap-[10px] w-[236px] h-12 border border-solid border-black rounded-[6px] justify-center items-center text-black font-[verdana-400] text-base"
       >
         <svg
@@ -22,6 +24,10 @@
         >Oldingi
       </button>
       <button
+        @click="nextPage"
+        :class="{
+          'opacity-10 pointer-events-none': totalPage / (current * params.pageSize) < 1,
+        }"
         class="flex gap-[10px] w-[236px] h-12 border border-solid border-blue-bold bg-blue-bold rounded-[6px] justify-center items-center text-white font-[verdana-400] text-base"
       >
         Keyingi
@@ -44,12 +50,19 @@
       </button>
     </div>
     <div class="flex gap-12 items-center">
-      <p class="text-black font-[verdana-400] text-base">Barcha sahifalar <span>127</span></p>
-      <div class="flex gap-3 items-center"> 
-        <input type="text" class="flex rounded-[6px] border border-solid border-black px-6 py-3 text-base font-[verdana-400] max-w-[106px]" />
+      <p class="text-black font-[verdana-400] text-base">
+        Barcha sahifalar <span>{{(this.totalPage / this.params.pageSize).toFixed()}}</span>
+      </p>
+      <div class="flex gap-3 items-center">
+        <input
+          v-model="pageHandle"
+          type="text"
+          class="flex rounded-[6px] border border-solid border-black px-6 py-3 text-base font-[verdana-400] max-w-[106px]"
+        />
         <p class="text-black font-[verdana-400] text-base">sahifaga o‘tish</p>
       </div>
       <button
+        @click="changePage"
         class="flex gap-[10px] w-[236px] h-12 border border-solid border-black rounded-[6px] justify-center items-center text-black font-[verdana-400] text-base"
       >
         O'tish<svg
@@ -73,6 +86,81 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["totalPage"],
+  data() {
+    return {
+      current: 1,
+      pageHandle: 1,
+      params: {
+        pageSize: 16,
+        page: 1,
+      },
+    };
+  },
+  methods: {
+    async changePage() {
+      if (
+        this.pageHandle > 0 &&
+        this.totalPage / (this.pageHandle * this.params.pageSize) > 1
+      ) {
+        await this.changePagination(this.pageHandle);
+        this.$emit("getData");
+      } else {
+        this.pageHandle = (this.totalPage / this.params.pageSize).toFixed();
+        if (this.pageHandle < 1) this.pageHandle = 1;
+        await this.changePagination(this.pageHandle);
+        this.$emit("getData");
+      }
+    },
+    async prevPage() {
+      if (this.current > 1) {
+        this.current--;
+        await this.changePagination(this.current);
+        this.$emit("getData");
+      }
+    },
+    async nextPage() {
+      this.current++;
+      await this.changePagination(this.current);
+      this.$emit("getData");
+    },
+    async pageChange(e) {
+      await this.changePagination(e);
+      this.$emit("getData");
+    },
+    async changePagination(val) {
+      if (this.$route.query.page != val) {
+        await this.$router.replace({
+          path: this.$route.path,
+          query: {
+            ...this.$route.query,
+            page: val,
+          },
+        });
+      }
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    },
+  },
+  async mounted() {
+    if (
+      !Object.keys(this.$route.query).includes("page") ||
+      !Object.keys(this.$route.query).includes("page_size")
+    ) {
+      await this.$router.replace({
+        path: this.$route.path,
+        query: { page: this.params.page, page_size: this.params.pageSize },
+      });
+    }
+    this.current = Number(this.$route.query.page);
+    this.pageHandle = Number(this.$route.query.page);
+  },
+  watch:{
+    current(val) {
+      this.pageHandle = val
+    }
+  }
+};
 </script>
 <style lang="css" scoped></style>

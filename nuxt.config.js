@@ -22,8 +22,15 @@ export default {
     { src: "~plugins/antd-ui.js", ssr: false },
     { src: "~plugins/quill-editor.js", ssr: false },
   ],
-
+  ssr: false,
   // Auto import components: https://go.nuxtjs.dev/config-components
+  axios: {
+    credentials: false,
+    init(axios) {
+      axios.defaults.withCredentials = true;
+    },
+    baseURL: "https://api.hotels.ndc.uz/api/admin",
+  },
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
@@ -33,7 +40,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ["@nuxtjs/axios"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

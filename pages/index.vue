@@ -98,6 +98,8 @@ export default {
   name: "IndexPage",
   data() {
     return {
+      hotels: [],
+      totalPage: 1,
       loading: false,
       columnOrders: [
         {
@@ -280,6 +282,29 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    this.__GET_HOTELS();
+  },
+  methods: {
+    async __GET_HOTELS() {
+      try {
+        this.loading = true;
+        const data = await this.$store.dispatch("fetchHotels/getHotels", {
+          page: 1,
+          page_size: 16,
+          ...this.$route.query,
+        });
+        this.hotels = data.data.data.map((item) => {
+          return {
+            ...item,
+            indexId: item.id,
+          };
+        });
+        this.totalPage = data.data.total;
+        this.loading = false;
+      } catch (e) {}
+    },
   },
   components: {
     VPagination,
