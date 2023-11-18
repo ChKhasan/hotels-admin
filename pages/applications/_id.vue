@@ -2,6 +2,7 @@
   <div class="create-hotel max-w-[1536px] mx-auto py-[60px]">
     <div class="flex justify-start items-center">
       <button
+        @click="$router.push('/applications')"
         class="flex gap-[10px] w-[236px] h-11 border border-solid border-blue-bold bg-blue-bold rounded-[8px] justify-center items-center text-white font-[verdana-400] text-base"
       >
         <svg
@@ -42,7 +43,7 @@
           class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
         >
           <p class="text-white font-[verdana-400] text-base">Oilaviy mehmon uyi nomi</p>
-          <h5 class="text-[24px] text-white font-bold">Lokomotiv hostel</h5>
+          <h5 class="text-[24px] text-white font-bold">{{ info?.name }}</h5>
         </div>
         <div
           class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
@@ -50,7 +51,7 @@
           <p class="text-white font-[verdana-400] text-base">
             Oilaviy mehmon uyi joylashgan hudud
           </p>
-          <h5 class="text-[24px] text-white font-bold">Toshkent shahri</h5>
+          <h5 class="text-[24px] text-white font-bold">{{ info?.region?.name?.ru }}</h5>
         </div>
         <div
           class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
@@ -59,7 +60,7 @@
             Oilaviy mehmon uyi manzili
           </p>
           <h5 class="text-[24px] text-white font-bold">
-            Toshkent sh, Mirobod tumani, O‘zbekiston ko‘ch, 2-uy
+            {{ info?.address_from_application }}
           </h5>
         </div>
       </div>
@@ -68,13 +69,13 @@
           class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
         >
           <p class="text-white font-[verdana-400] text-base">Tashkilot yuridik nomi</p>
-          <h5 class="text-[24px] text-white font-bold">YTT “Abdullayev IY”</h5>
+          <h5 class="text-[24px] text-white font-bold">{{ info?.legal_name }}</h5>
         </div>
         <div
           class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
         >
           <p class="text-white font-[verdana-400] text-base">STIR raqami</p>
-          <h5 class="text-[24px] text-white font-bold">309 558 944</h5>
+          <h5 class="text-[24px] text-white font-bold">{{ info?.tin }}</h5>
         </div>
         <div
           class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
@@ -83,7 +84,8 @@
             Oilaviy mehmon uyi rahbari
           </p>
           <h5 class="text-[24px] text-white font-bold">
-            Abdullayev Iskandar Yuldashevich
+            {{ info?.director_surname }} {{ info?.director_name }}
+            {{ info?.director_fathers_name }}
           </h5>
         </div>
       </div>
@@ -94,19 +96,19 @@
           <p class="text-white font-[verdana-400] text-base">
             Oilaviy mehmon uyi telefon raqamlari
           </p>
-          <h5 class="text-[24px] text-white font-bold">+998 93 251-56-36</h5>
+          <h5 class="text-[24px] text-white font-bold">{{ info?.phone_number }}</h5>
         </div>
         <div
           class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
         >
           <p class="text-white font-[verdana-400] text-base">Elektron manzili</p>
-          <h5 class="text-[24px] text-white font-bold">hostel@gmail.com</h5>
+          <h5 class="text-[24px] text-white font-bold">{{ info?.email }}</h5>
         </div>
         <div
           class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
         >
           <p class="text-white font-[verdana-400] text-base">Veb sayti</p>
-          <h5 class="text-[24px] text-white font-bold">www.hostel.uz</h5>
+          <h5 class="text-[24px] text-white font-bold">{{ info?.website }}</h5>
         </div>
       </div>
 
@@ -368,7 +370,7 @@
                 class="form-item w-full mb-0"
                 label="Tashkilot manzili (O‘Z)"
               >
-                <a-input v-model="text" placeholder="Tashkilot manzili..." />
+                <a-input v-model="form.address.uz" placeholder="Tashkilot manzili..." />
               </a-form-model-item>
             </div>
             <div class="grid grid-cols-1 w-full">
@@ -377,7 +379,7 @@
                 class="form-item w-full mb-0"
                 label="Tashkilot manzili (RU)"
               >
-                <a-input v-model="text" placeholder="Tashkilot manzili..." />
+                <a-input v-model="form.address.ru" placeholder="Tashkilot manzili..." />
               </a-form-model-item>
             </div>
             <div class="grid grid-cols-1 w-full">
@@ -386,7 +388,7 @@
                 class="form-item w-full mb-0"
                 label="Tashkilot manzili (EN)"
               >
-                <a-input v-model="text" placeholder="Tashkilot manzili..." />
+                <a-input v-model="form.address.en" placeholder="Tashkilot manzili..." />
               </a-form-model-item>
             </div>
             <div class="grid grid-cols-2 gap-6">
@@ -395,27 +397,15 @@
                 class="form-item w-full mb-0"
                 label="Xaritada joylashuv uzunlik nuqtasi"
               >
-                <a-input v-model="text" placeholder="Uzunlik nuqtasini kiriting" />
+                <a-input v-model="form.lat" placeholder="Uzunlik nuqtasini kiriting" />
               </a-form-model-item>
               <a-form-model-item
                 prop="deadline"
                 class="form-item w-full mb-0"
                 label="Xaritada joylashuv kenglik nuqtasi"
               >
-                <a-select
-                  v-model="sort"
-                  placeholder="Kenglik nuqtasini kiriting"
-                  class="w-full"
-                >
-                  <a-select-option
-                    :value="region"
-                    v-for="region in [1, 2, 3, 4]"
-                    :key="region"
-                  >
-                    {{ region }}</a-select-option
-                  >
-                </a-select></a-form-model-item
-              >
+                <a-input v-model="form.lon" placeholder="Kenglik nuqtasini kiriting" />
+              </a-form-model-item>
             </div>
           </div>
         </a-form-model>
@@ -501,7 +491,22 @@ export default {
       text: "",
       sort: undefined,
       visible: false,
+      info: {},
+      form: {
+        lat: "",
+        lon: "",
+        status: "",
+        region_id: null,
+        address: {
+          ru: "",
+          en: "",
+          uz: "",
+        },
+      },
     };
+  },
+  mounted() {
+    this.__GET_APPLICATIONS(this.$route.params.id);
   },
   methods: {
     handleOk() {
@@ -509,13 +514,46 @@ export default {
     },
     handleChange(info) {
       const status = info.file.status;
-      if (status !== 'uploading') {
+      if (status !== "uploading") {
         console.log(info.file, info.fileList);
       }
-      if (status === 'done') {
+      if (status === "done") {
         this.$message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === 'error') {
+      } else if (status === "error") {
         this.$message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    async __GET_APPLICATIONS(id) {
+      try {
+        const data = await this.$store.dispatch("fetchHotels/getHotelsById", id);
+        this.form.address = data?.data?.address;
+        this.form.lat = data?.data?.lat;
+        this.form.lon = data?.data?.lon;
+        this.form.status = data?.data?.application_status;
+        this.form.region_id = data?.data?.region?.id;
+        
+        this.info = data?.data;
+        this.title = { ...data?.data?.name };
+      } catch (e) {}
+    },
+    async __EDIT_APPLICATIONS(form) {
+      try {
+        const data = await this.$store.dispatch("fetchHotels/editHotels", {
+          id: this.editId,
+          data: form,
+        });
+        this.__GET_APPLICATIONSS();
+        this.editId = null;
+        this.visible = false;
+        this.$notification["success"]({
+          message: "Success",
+          description: "Успешно изменен",
+        });
+      } catch (e) {
+        this.$notification["error"]({
+          message: "Error",
+          description: e.response.statusText,
+        });
       }
     },
   },

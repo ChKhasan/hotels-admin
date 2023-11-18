@@ -37,11 +37,20 @@
     <div class="body">
       <a-table
         :columns="columnOrders"
-        :data-source="orders"
+        :data-source="hotels"
         class="custom-table"
         :loading="loading"
         :pagination="false"
         align="center"
+        :customRow="
+            (column) => {
+              return {
+                on: {
+                  click: (e) => clickRow(column), // click header row
+                },
+              };
+            }
+          "
       >
         <span slot="status" slot-scope="text">
           <span
@@ -52,212 +61,114 @@
               'status-success': text == 'success',
             }"
           >
-            {{ text }}
+            {{ statusTypes[text] }}
           </span>
         </span>
-        <span
-          slot="phone_number"
-          class="flex justify-between items-center cursor-pointer"
-          slot-scope="text"
-        >
-          {{ text }}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-          >
-            <path
-              d="M9.61914 3.95312L13.6658 7.99979L9.61914 12.0465"
-              stroke="#092D53"
-              stroke-width="1.5"
-              stroke-miterlimit="10"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M2.33398 8H13.554"
-              stroke="#092D53"
-              stroke-width="1.5"
-              stroke-miterlimit="10"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+        <span slot="name" slot-scope="text">
+          {{ text.length > 0 ? text : "----" }}
+        </span>
+        <span slot="end_date" slot-scope="text">
+          {{ text ? text : "----" }}
+        </span>
+        <span slot="begin_date" slot-scope="text">
+          {{ text ? moment(text).format("DD.MM.YYYY - HH-MM") : "----" }}
         </span>
       </a-table>
     </div>
     <div class="mt-10">
-      <VPagination />
+      <VPagination @getData="__GET_HOTELS" :totalPage="totalPage" />
     </div>
   </div>
 </template>
 
 <script>
 import VPagination from "@/components/VPagination.vue";
+import moment from "moment";
 export default {
   name: "IndexPage",
   data() {
     return {
       loading: false,
+      hotels: [],
+      totalPage: 1,
+      statusTypes: {
+        new: "Yangi",
+        error: "RAD ETILGAN",
+        progress: "HUJJATLAR KO‘RIB CHIQILMOQDA",
+        success: "MUVAFFAQIYATLI YAKUNLANGAN",
+      },
       columnOrders: [
         {
           title: "Reyestr raqami",
-          dataIndex: "reId",
-          key: "reId",
+          dataIndex: "indexId",
+          key: "indexId",
           slots: { title: "customTitle" },
-          scopedSlots: { customRender: "reId" },
-          className: "column-text",
+          scopedSlots: { customRender: "indexId" },
+          className: "column-text cursor-pointer",
         },
         {
           title: "Mehmon uyi nomi",
-          dataIndex: "name",
-          key: "name",
+          dataIndex: "documents",
+          key: "documents",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "name" },
-          className: "column-text",
+          className: "column-text cursor-pointer",
         },
         {
           title: "Ariza kelib tushgan sana",
-          dataIndex: "begin_date",
-          key: "begin_date",
+          dataIndex: "created_at",
+          key: "created_at",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "begin_date" },
-          className: "column-text",
+          className: "column-text cursor-pointer",
         },
         {
           title: "Ariza yakunlangan sana",
-          dataIndex: "end_date",
-          key: "end_date",
+          dataIndex: "closed_at",
+          key: "closed_at",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "end_date" },
-          className: "column-text",
+          className: "column-text cursor-pointer",
         },
         {
           title: "Ariza holati",
-          dataIndex: "status",
-          key: "status",
+          dataIndex: "application_status",
+          key: "application_status",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "status" },
           className: "column-status",
         },
       ],
-      orders: [
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "new",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "progress",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "inactive",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "inactive",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "success",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "inactive",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "success",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "inactive",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "success",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "success",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "success",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "inactive",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "success",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "inactive",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "success",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          begin_date: "15.10.2023  -  14:37",
-          end_date: "15.10.2023  -  14:37",
-          status: "inactive",
-        },
-      ],
     };
+  },
+  mounted() {
+    this.__GET_HOTELS();
+  },
+  methods: {
+    clickRow(obj) {
+      console.log(obj);
+      this.$router.push(`/applications/${obj?.id}`);
+    },
+    moment,
+    async __GET_HOTELS() {
+      try {
+        this.loading = true;
+        const data = await this.$store.dispatch("fetchHotels/getHotels", {
+          page: 1,
+          page_size: 16,
+          applications: 1,
+          ...this.$route.query,
+        });
+        this.hotels = data.data.data.map((item) => {
+          return {
+            ...item,
+            indexId: item.id,
+          };
+        });
+        this.totalPage = data.data.total;
+        this.loading = false;
+      } catch (e) {}
+    },
   },
   components: {
     VPagination,

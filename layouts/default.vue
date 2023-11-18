@@ -262,5 +262,6 @@ export default {
 }
 .menu .active {
   background: rgba(255, 255, 255, 0.36);
+  pointer-events: none;
 }
 </style>

@@ -244,6 +244,7 @@ export default {
     this.__GET_REGIONS();
   },
   methods: {
+ 
     handleOk() {
       this.visible = false;
     },
