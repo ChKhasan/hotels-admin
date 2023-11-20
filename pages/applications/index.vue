@@ -88,6 +88,11 @@ import VPagination from "@/components/VPagination.vue";
 import moment from "moment";
 export default {
   name: "IndexPage",
+  head() {
+    return {
+      title: "Arizalar",
+    };
+  },
   data() {
     return {
       loading: false,

@@ -1,6 +1,6 @@
 export default {
   head: {
-    title: "hotels-admin",
+    title: "Admin panel",
     htmlAttrs: {
       lang: "en",
     },

@@ -6,7 +6,7 @@
           :class="{ 'bg-blue-bold text-white': $route.name == 'settings' }"
           class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] text-blue-bold text-base"
         >
-          Foydalanuvchilar {{ $route.name }}
+          Foydalanuvchilar 
         </button>
         <button
           :class="{ 'bg-blue-bold text-white': $route.name == 'settings-messages' }"
@@ -17,6 +17,7 @@
         </button>
       </div>
       <button
+      @click="$router.push('/settings/add')"
         class="w-[366px] h-12 flex uppercase justify-center gap-5 items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] bg-blue-bold text-white text-base"
       >
         Yangi xabar jo‘natish
@@ -180,6 +181,11 @@
 import VPagination from "@/components/VPagination.vue";
 export default {
   name: "IndexPage",
+  head() {
+    return {
+      title: "Foydalanuvchilar",
+    };
+  },
   data() {
     return {
       tabHandler: true,

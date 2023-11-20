@@ -182,6 +182,11 @@
 import VPagination from "@/components/VPagination.vue";
 export default {
   name: "IndexPage",
+  head() {
+    return {
+      title: "Viloyatlar",
+    };
+  },
   data() {
     return {
       title: {},

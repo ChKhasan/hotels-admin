@@ -113,6 +113,11 @@
 import VPagination from "@/components/VPagination.vue";
 export default {
   name: "IndexPage",
+  head() {
+    return {
+      title: "Mehmon uylari",
+    };
+  },
   data() {
     return {
       hotels: [],
@@ -172,7 +177,6 @@ export default {
   mounted() {
     this.__GET_HOTELS();
     this.search = this.$route.query["search"] || "";
-
   },
   methods: {
     onSearch(e) {
