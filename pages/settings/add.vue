@@ -2,16 +2,14 @@
   <div class="create-hotel max-w-[1536px] mx-auto py-[60px]">
     <div class="flex gap-6 justify-start mb-10">
       <button
-        :class="{ 'bg-blue-bold text-white': tabHandler }"
-        @click="tabHandler = true"
+        :class="{ 'bg-blue-bold text-white': $route.name == 'settings' }"
+        @click="$router.push('/settings')"
         class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] text-blue-bold text-base"
       >
         Foydalanuvchilar
       </button>
       <button
-        :class="{ 'bg-blue-bold text-white': !tabHandler }"
-        @click="tabHandler = false"
-        class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] text-blue-bold text-base"
+        class="w-[366px] bg-blue-bold h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] text-white text-base"
       >
         Xabarlar
       </button>
@@ -21,15 +19,21 @@
         <div class="flex flex-col gap-10">
           <div class="grid grid-cols-1 gap-6">
             <a-form-model-item
-              prop="deadline"
+              prop="title"
               class="form-item w-full mb-0"
               label="Xabar sarlavhasi"
             >
-              <a-input v-model="text" placeholder="Xabar sarlavhasini kiriting" />
+              <a-input v-model="form.title" placeholder="Xabar sarlavhasini kiriting" />
             </a-form-model-item>
           </div>
           <div class="grid grid-cols-1 gap-6">
-            <quill-editor :options="editorOption" :value="text" v-model="text" />
+            <a-form-model-item prop="message" class="form-item w-full mb-0">
+              <quill-editor
+                :options="editorOption"
+                :value="form.message"
+                v-model="form.message"
+              />
+            </a-form-model-item>
           </div>
 
           <div class="buttons flex justify-center gap-6">
@@ -39,6 +43,7 @@
               Bekor qilish
             </button>
             <button
+              @click="submit"
               class="py-[13px] w-[366px] rounded-[8px] text-white bg-blue-bold font-[verdana-400] text-base uppercase flex justify-center"
             >
               Xabarni jo‘natish
@@ -47,51 +52,6 @@
         </div>
       </a-form-model>
     </div>
-    <a-modal
-      class="close-modal"
-      v-model="visible"
-      :body-style="{ borderRadius: '20px' }"
-      centered
-      :closable="false"
-      width="748px"
-      @ok="handleOk"
-    >
-      <div>
-        <div class="head">
-          <h4 class="text-[24px] font-[verdana-700] text-blue-bold text-center">
-            Oilaviy mehmon uyi faoliyati holatini o‘zgartirish
-          </h4>
-        </div>
-        <div class="body pt-[30px] mb-[140px] flex justify-center">
-          <div class="flex flex-col items-start">
-            <p
-              class="text-base font-[verdana-400] text-blue-bold flex items-center gap-10"
-            >
-              Joriy holat: <span class="font-[verdana-700] text-green">Aktiv</span>
-            </p>
-            <p
-              class="text-base font-[verdana-400] text-blue-bold flex items-center gap-10"
-            >
-              O‘zgaradigan holati:
-              <span class="font-[verdana-700] text-red-dark">To‘xtatilgan</span>
-            </p>
-          </div>
-        </div>
-        <div class="buttons grid grid-cols-2 gap-[30px]">
-          <button
-            @click="handleOk"
-            class="py-[13px] rounded-[8px] text-white bg-red-dark2 font-[verdana-400] text-base uppercase flex justify-center"
-          >
-            Bekor qilish
-          </button>
-          <button
-            class="py-[13px] rounded-[8px] text-white bg-blue-bold font-[verdana-400] text-base uppercase flex justify-center"
-          >
-            Tasdiqlash
-          </button>
-        </div>
-      </div>
-    </a-modal>
   </div>
 </template>
 <script>
@@ -101,8 +61,16 @@ import "quill/dist/quill.bubble.css";
 export default {
   data() {
     return {
-      form: {},
-      rules: {},
+      form: {
+        title: "",
+        message: "",
+      },
+      rules: {
+        title: [{ required: true, message: "This field is required", trigger: "change" }],
+        message: [
+          { required: true, message: "This field is required", trigger: "change" },
+        ],
+      },
       text: "",
       sort: undefined,
       visible: false,
@@ -116,11 +84,37 @@ export default {
     handleOk() {
       this.visible = false;
     },
+    submit() {
+      this.$refs.ruleForm.validate((valid) => {
+        if (valid) {
+          this.__POST_MESSAGE(this.form);
+        } else {
+        }
+      });
+    },
+    async __POST_MESSAGE(form) {
+      try {
+        const data = await this.$store.dispatch("fetchMessages/postMessage", { ...form });
+        this.$notification["success"]({
+          message: "Success",
+          description: "Успешно добавлен",
+        });
+        this.$router.go(-1);
+      } catch (e) {
+        this.$notification["error"]({
+          message: "Error",
+          description: e.response.statusText,
+        });
+      }
+    },
   },
 };
 </script>
 <style lang="css" scoped>
 /* form  */
+.form-item :deep(label::before) {
+  display: none;
+}
 .form-item :deep(label) {
   font-family: var(--v-regular);
   color: #000;

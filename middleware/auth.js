@@ -8,7 +8,6 @@ export default async function ({ redirect, $axios, store }) {
 
     store.commit("profileInfo", data?.data);
   } catch (e) {
-    console.log(e);
     localStorage.removeItem("auth_token");
     redirect("/admin/login");
   }

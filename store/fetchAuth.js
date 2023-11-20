@@ -4,15 +4,11 @@ export const actions = {
     return res;
   },
   async logOut({}, data) {
-    const res = await this.$axios.$post(
-      `/auth/logout`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-        },
-      }
-    );
+    const res = await this.$axios.$get(`/auth/logout`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+      },
+    });
     return res;
   },
   async getPorfile({}, data) {

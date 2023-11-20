@@ -57,8 +57,8 @@
             :class="{
               'status-new': text == 'new',
               'status-inactive': text == 'inactive',
-              'status-progress': text == 'progress',
-              'status-success': text == 'success',
+              'status-progress': text == 'in_process',
+              'status-success': text == 'accepted',
             }"
           >
             {{ statusTypes[text] }}
@@ -94,8 +94,8 @@ export default {
       statusTypes: {
         new: "Yangi",
         error: "RAD ETILGAN",
-        progress: "HUJJATLAR KO‘RIB CHIQILMOQDA",
-        success: "MUVAFFAQIYATLI YAKUNLANGAN",
+        in_process: "HUJJATLAR KO‘RIB CHIQILMOQDA",
+        accepted: "MUVAFFAQIYATLI YAKUNLANGAN",
       },
       columnOrders: [
         {
@@ -146,7 +146,6 @@ export default {
   },
   methods: {
     clickRow(obj) {
-      console.log(obj);
       this.$router.push(`/applications/${obj?.id}`);
     },
     moment,

@@ -37,22 +37,37 @@
     <div class="body">
       <a-table
         :columns="columnOrders"
-        :data-source="orders"
+        :data-source="hotels"
         class="custom-table"
         :loading="loading"
         :pagination="false"
         align="center"
+        :customRow="
+          (column) => {
+            return {
+              on: {
+                click: (e) => clickRow(column), // click header row
+              },
+            };
+          }
+        "
       >
         <span slot="status" slot-scope="text">
           <span
             :class="{
-              'status-active': text == 'active',
-              'status-inactive': text == 'inactive',
+              'status-active': text == 1,
+              'status-inactive': text == 0,
             }"
           >
-            {{ text }}
-          </span>
+            {{ text ? "Aktiv" : "To‘xtatilgan" }}</span
+          >
         </span>
+      
+        <span slot="derictor" slot-scope="text"
+          >{{ text?.director_surname }} {{ text?.director_name }}
+          {{ text?.director_fathers_name }}</span
+        >
+        <span slot="place" slot-scope="text">{{ text?.ru }}</span>
         <span
           slot="phone_number"
           class="flex justify-between items-center cursor-pointer"
@@ -87,7 +102,7 @@
       </a-table>
     </div>
     <div class="mt-10">
-      <VPagination />
+      <VPagination @getData="__GET_HOTELS" :totalPage="totalPage" />
     </div>
   </div>
 </template>
@@ -108,7 +123,7 @@ export default {
           key: "reId",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "reId" },
-          className: "column-text",
+          className: "column-text cursor-pointer",
         },
         {
           title: "Mehmon uyi nomi",
@@ -116,23 +131,21 @@ export default {
           key: "name",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "name" },
-          className: "column-text",
+          className: "column-text cursor-pointer",
         },
         {
           title: "Mehmon uyi direktori",
-          dataIndex: "derictor",
-          key: "derictor",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "derictor" },
-          className: "column-text",
+          className: "column-text cursor-pointer",
         },
         {
           title: "Mehmon uyi joylashgan hudud",
-          dataIndex: "place",
-          key: "place",
+          dataIndex: "address",
+          key: "address",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "place" },
-          className: "column-text",
+          className: "column-text cursor-pointer",
         },
         {
           title: "Mehmon uyi holati",
@@ -148,7 +161,7 @@ export default {
           key: "phone_number",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "phone_number" },
-          className: "column-text",
+          className: "column-text cursor-pointer",
         },
       ],
       orders: [
@@ -287,6 +300,9 @@ export default {
     this.__GET_HOTELS();
   },
   methods: {
+    clickRow(obj) {
+      this.$router.push(`/hotel/${obj?.id}`);
+    },
     async __GET_HOTELS() {
       try {
         this.loading = true;
@@ -298,12 +314,17 @@ export default {
         this.hotels = data.data.data.map((item) => {
           return {
             ...item,
-            indexId: item.id,
+            reId: this.zeroCreater(item.id),
           };
         });
         this.totalPage = data.data.total;
         this.loading = false;
       } catch (e) {}
+    },
+    zeroCreater(id) {
+      let arr = [...`${id}`].reverse();
+      let zeros = Array(6 - arr.length).fill(0);
+      return [...zeros, ...arr].join("");
     },
   },
   components: {

@@ -151,7 +151,11 @@
                 <li>
                   <nuxt-link
                     to="/information"
-                    :class="{ active: $route.name == 'information' || $route.name == 'information-additional' }"
+                    :class="{
+                      active:
+                        $route.name == 'information' ||
+                        $route.name == 'information-additional',
+                    }"
                     class="font-[verdana-400] text-base leading-6 text-white flex gap-6 hover:text-white px-6 py-3 rounded-[6px]"
                   >
                     <svg
@@ -199,7 +203,10 @@
                 <li>
                   <nuxt-link
                     to="/settings"
-                    :class="{ active: $route.name == 'settings' }"
+                    :class="{
+                      active:
+                        $route.name == 'settings' || $route.name == 'settings-messages',
+                    }"
                     class="font-[verdana-400] text-base leading-6 text-white flex gap-6 hover:text-white px-6 py-3 rounded-[6px]"
                     ><svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -231,15 +238,24 @@
             </div>
           </div>
           <div class="px-6">
-            <button
-              class="flex gap-[18px] items-center px-[6px] font-[verdana-400] text-base text-white"
-            >
-              <img
-                class="h-8 w-8 rounded-[6px] overflow-hidden"
-                src="../assets/images/avatar.png"
-                alt=""
-              />Egamberdiyev Akobir
-            </button>
+            <a-popover v-model="visible" title="Chiqish" trigger="click">
+              <button
+                slot="content"
+                @click="logout"
+                class="logout-btn font-[verdana-400] text-base rounded-[12px] px-4 py-2 text-white flex justify-center w-full"
+              >
+                LogOut
+              </button>
+              <button
+                class="flex gap-[18px] items-center px-[6px] font-[verdana-400] text-base text-white"
+              >
+                <img
+                  class="h-8 w-8 rounded-[6px] overflow-hidden"
+                  src="../assets/images/avatar.png"
+                  alt=""
+                />{{$store.state.profileInfo?.username}}
+              </button>
+            </a-popover>
           </div>
         </div>
       </div>
@@ -252,6 +268,23 @@
 <script>
 export default {
   middleware: "auth",
+  data() {
+    return {
+      visible: false,
+    };
+  },
+  methods: {
+    async logout() {
+      try {
+        await this.$store.dispatch("fetchAuth/logOut");
+        localStorage.removeItem("auth_token");
+        this.$router.push("/admin/login");
+      } catch (e) {
+        localStorage.removeItem("auth_token");
+        this.$router.push("/admin/login");
+      }
+    },
+  },
 };
 </script>
 <style lang="css" scoped>
@@ -259,6 +292,9 @@ export default {
   background: linear-gradient(215deg, #012f46 0%, #010d1d 47.19%, #01354c 141.84%);
   /* 10 */
   box-shadow: 0px 4.13688px 12.41065px 2.06844px rgba(0, 0, 0, 0.12);
+}
+.logout-btn {
+  background: linear-gradient(215deg, #012f46 0%, #010d1d 47.19%, #01354c 141.84%);
 }
 .menu .active {
   background: rgba(255, 255, 255, 0.36);

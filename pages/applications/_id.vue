@@ -470,64 +470,19 @@
       </div>
       <div class="buttons flex justify-center gap-6">
         <button
+          @click="submit('cancel')"
           class="py-[13px] w-[366px] rounded-[8px] text-white bg-red-dark2 font-[verdana-400] text-base uppercase flex justify-center"
         >
           Rad etish
         </button>
         <button
-          @click="submit"
+          @click="submit('accept')"
           class="py-[13px] w-[366px] rounded-[8px] text-white bg-blue-bold font-[verdana-400] text-base uppercase flex justify-center"
         >
           Tasdiqlash va reyestrga kiritish
         </button>
       </div>
     </div>
-
-    <a-modal
-      class="close-modal"
-      v-model="visible"
-      :body-style="{ borderRadius: '20px' }"
-      centered
-      :closable="false"
-      width="748px"
-      @ok="handleOk"
-    >
-      <div>
-        <div class="head">
-          <h4 class="text-[24px] font-[verdana-700] text-blue-bold text-center">
-            Oilaviy mehmon uyi faoliyati holatini o‘zgartirish
-          </h4>
-        </div>
-        <div class="body pt-[30px] mb-[140px] flex justify-center">
-          <div class="flex flex-col items-start">
-            <p
-              class="text-base font-[verdana-400] text-blue-bold flex items-center gap-10"
-            >
-              Joriy holat: <span class="font-[verdana-700] text-green">Aktiv</span>
-            </p>
-            <p
-              class="text-base font-[verdana-400] text-blue-bold flex items-center gap-10"
-            >
-              O‘zgaradigan holati:
-              <span class="font-[verdana-700] text-red-dark">To‘xtatilgan</span>
-            </p>
-          </div>
-        </div>
-        <div class="buttons grid grid-cols-2 gap-[30px]">
-          <button
-            @click="handleOk"
-            class="py-[13px] rounded-[8px] text-white bg-red-dark2 font-[verdana-400] text-base uppercase flex justify-center"
-          >
-            Bekor qilish
-          </button>
-          <button
-            class="py-[13px] rounded-[8px] text-white bg-blue-bold font-[verdana-400] text-base uppercase flex justify-center"
-          >
-            Tasdiqlash
-          </button>
-        </div>
-      </div>
-    </a-modal>
   </div>
 </template>
 <script>
@@ -537,10 +492,6 @@ export default {
       coords: [41.311081, 69.240562],
       regions: [],
       form: {},
-      rules: {},
-      text: "",
-      sort: undefined,
-      visible: false,
       info: {},
       rules: {
         lat: [{ required: true, message: "This field is required", trigger: "change" }],
@@ -574,13 +525,10 @@ export default {
     this.__GET_REGIONS();
   },
   methods: {
-    handleOk() {
-      this.visible = false;
-    },
-    submit() {
+    submit(type) {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          this.__EDIT_APPLICATIONS(this.form);
+          this.__EDIT_APPLICATIONS(this.form, type);
         } else {
         }
       });
@@ -602,7 +550,6 @@ export default {
     handleChange(info) {
       const status = info.file.status;
       if (status !== "uploading") {
-        console.log(info.file, info.fileList);
       }
       if (status === "done") {
         this.$message.success(`${info.file.name} file uploaded successfully.`);
@@ -624,11 +571,14 @@ export default {
         this.title = { ...data?.data?.name };
       } catch (e) {}
     },
-    async __EDIT_APPLICATIONS(form) {
+    async __EDIT_APPLICATIONS(form, type) {
       try {
         const data = await this.$store.dispatch("fetchHotels/editHotels", {
           id: this.$route.params.id,
           data: form,
+          params: {
+            type: type,
+          },
         });
         this.$notification["success"]({
           message: "Success",

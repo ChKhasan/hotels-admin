@@ -136,12 +136,10 @@ export default {
   },
   methods: {
     submit() {
-      console.log("asfasdfas");
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           this.__AUTH(this.form);
         } else {
-          console.log("qulbola");
         }
       });
     },
@@ -151,9 +149,11 @@ export default {
         localStorage.setItem("auth_token", res.data.token);
         this.$store.commit("logIn");
         this.$router.push("/");
-        console.log(res);
       } catch (e) {
-        // this.showError = true;
+        this.$notification["error"]({
+          message: "Error",
+          description: e.response.statusText,
+        });
       }
     },
   },
