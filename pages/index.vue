@@ -6,8 +6,10 @@
       >
         <input
           type="text"
+          v-model="search"
           class="w-full px-5 py-[10px]"
           placeholder="Oilaviy mehmon uyi nomini kiriting"
+          @input="onSearch"
         />
         <svg
           class="absolute right-5"
@@ -62,7 +64,7 @@
             {{ text ? "Aktiv" : "To‘xtatilgan" }}</span
           >
         </span>
-      
+
         <span slot="derictor" slot-scope="text"
           >{{ text?.director_surname }} {{ text?.director_name }}
           {{ text?.director_fathers_name }}</span
@@ -116,6 +118,7 @@ export default {
       hotels: [],
       totalPage: 1,
       loading: false,
+      search: "",
       columnOrders: [
         {
           title: "Reyestr raqami",
@@ -164,142 +167,17 @@ export default {
           className: "column-text cursor-pointer",
         },
       ],
-      orders: [
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "active",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "active",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "active",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "inactive",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "active",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "inactive",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "active",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "inactive",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "active",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "active",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "active",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "inactive",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "active",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "inactive",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "active",
-          phone_number: "+998 93 251-56-36",
-        },
-        {
-          reId: "000386",
-          name: "Lux Family Guesthouse",
-          derictor: "Abdullayev Iskandar Yuldashevich",
-          place: "Toshkent shahri",
-          status: "inactive",
-          phone_number: "+998 93 251-56-36",
-        },
-      ],
     };
   },
   mounted() {
     this.__GET_HOTELS();
+    this.search = this.$route.query["search"] || "";
+
   },
   methods: {
+    onSearch(e) {
+      this.changeSearch(e, "/", "__GET_HOTELS");
+    },
     clickRow(obj) {
       this.$router.push(`/hotel/${obj?.id}`);
     },
@@ -325,6 +203,31 @@ export default {
       let arr = [...`${id}`].reverse();
       let zeros = Array(6 - arr.length).fill(0);
       return [...zeros, ...arr].join("");
+    },
+    async changeSearch(val, url, func) {
+      if (val.target.value.length > 2) {
+        if (this.$route.query?.search != val.target.value) {
+          await this.$router.replace({
+            path: url,
+            query: { ...this.$route.query, search: val.target.value, page: 1 },
+          });
+        }
+        if (val.target.value == this.$route.query.search) this[func]();
+      } else if (val.target.value.length == 0) {
+        this.clearQuery(url, func);
+      }
+    },
+    async clearQuery(url, func) {
+      this.search = "";
+      const queryFirst = { ...this.$route.query, page: 1 };
+      const { search, ...query } = queryFirst;
+      if (this.$route.query?.search) {
+        await this.$router.replace({
+          path: url,
+          query: { ...query },
+        });
+        this[func]();
+      }
     },
   },
   components: {

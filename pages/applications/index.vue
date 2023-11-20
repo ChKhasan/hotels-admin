@@ -5,6 +5,8 @@
         class="rounded-[10px] search-block border border-solid relative flex items-center"
       >
         <input
+          v-model="search"
+          @input="onSearch"
           type="text"
           class="w-full px-5 py-[10px]"
           placeholder="Oilaviy mehmon uyi nomini kiriting"
@@ -43,14 +45,14 @@
         :pagination="false"
         align="center"
         :customRow="
-            (column) => {
-              return {
-                on: {
-                  click: (e) => clickRow(column), // click header row
-                },
-              };
-            }
-          "
+          (column) => {
+            return {
+              on: {
+                click: (e) => clickRow(column), // click header row
+              },
+            };
+          }
+        "
       >
         <span slot="status" slot-scope="text">
           <span
@@ -90,6 +92,7 @@ export default {
     return {
       loading: false,
       hotels: [],
+      search: "",
       totalPage: 1,
       statusTypes: {
         new: "Yangi",
@@ -143,8 +146,12 @@ export default {
   },
   mounted() {
     this.__GET_HOTELS();
+    this.search = this.$route.query["search"] || "";
   },
   methods: {
+    onSearch(e) {
+      this.changeSearch(e, "/", "__GET_HOTELS");
+    },
     clickRow(obj) {
       this.$router.push(`/applications/${obj?.id}`);
     },
@@ -167,6 +174,31 @@ export default {
         this.totalPage = data.data.total;
         this.loading = false;
       } catch (e) {}
+    },
+    async changeSearch(val, url, func) {
+      if (val.target.value.length > 2) {
+        if (this.$route.query?.search != val.target.value) {
+          await this.$router.replace({
+            path: url,
+            query: { ...this.$route.query, search: val.target.value, page: 1 },
+          });
+        }
+        if (val.target.value == this.$route.query.search) this[func]();
+      } else if (val.target.value.length == 0) {
+        this.clearQuery(url, func);
+      }
+    },
+    async clearQuery(url, func) {
+      this.search = "";
+      const queryFirst = { ...this.$route.query, page: 1 };
+      const { search, ...query } = queryFirst;
+      if (this.$route.query?.search) {
+        await this.$router.replace({
+          path: url,
+          query: { ...query },
+        });
+        this[func]();
+      }
     },
   },
   components: {
