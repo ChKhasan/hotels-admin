@@ -90,7 +90,6 @@
         </div>
       </a-form-model>
     </div>
-    
   </div>
 </template>
 <script>
@@ -99,15 +98,15 @@ export default {
     return {
       visible: false,
       form: {
-        name: "name",
-        region_id: 1,
-        lat: "lat",
-        lon: "lon",
+        name: "",
+        region_id: "",
+        lat: "",
+        lon: "",
         status: 1,
         address: {
-          uz: "address uz",
-          ru: "address ru",
-          en: "address en",
+          uz: "",
+          ru: "",
+          en: "",
         },
       },
       regions: [],
