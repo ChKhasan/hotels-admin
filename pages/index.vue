@@ -127,10 +127,10 @@ export default {
       columnOrders: [
         {
           title: "Reyestr raqami",
-          dataIndex: "reId",
-          key: "reId",
+          dataIndex: "register_number",
+          key: "register_number",
           slots: { title: "customTitle" },
-          scopedSlots: { customRender: "reId" },
+          scopedSlots: { customRender: "register_number" },
           className: "column-text cursor-pointer",
         },
         {
@@ -193,21 +193,12 @@ export default {
           page_size: 16,
           ...this.$route.query,
         });
-        this.hotels = data.data.data.map((item) => {
-          return {
-            ...item,
-            reId: this.zeroCreater(item.id),
-          };
-        });
+        this.hotels = data.data.data;
         this.totalPage = data.data.total;
         this.loading = false;
       } catch (e) {}
     },
-    zeroCreater(id) {
-      let arr = [...`${id}`].reverse();
-      let zeros = Array(6 - arr.length).fill(0);
-      return [...zeros, ...arr].join("");
-    },
+
     async changeSearch(val, url, func) {
       if (val.target.value.length > 2) {
         if (this.$route.query?.search != val.target.value) {

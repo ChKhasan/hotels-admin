@@ -1,23 +1,29 @@
 <template>
   <div class="max-w-[1536px] mx-auto py-10">
     <div class="search mb-[60px] flex justify-between">
+      <button
+        @click="visibleUser = true"
+        class="w-[366px] h-12 flex uppercase justify-center gap-5 items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] bg-blue-bold text-white text-base"
+      >
+        Yangi xabar foydalanuvchi yaratish
+      </button>
       <div class="flex gap-6 justify-center">
         <button
           :class="{ 'bg-blue-bold text-white': $route.name == 'settings' }"
-          class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] text-blue-bold text-base"
+          class="w-[300px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] text-blue-bold text-base"
         >
-          Foydalanuvchilar 
+          Foydalanuvchilar
         </button>
         <button
           :class="{ 'bg-blue-bold text-white': $route.name == 'settings-messages' }"
           @click="$router.push('/settings/messages')"
-          class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] text-blue-bold text-base"
+          class="w-[300px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] text-blue-bold text-base"
         >
           Xabarlar
         </button>
       </div>
       <button
-      @click="$router.push('/settings/add')"
+        @click="$router.push('/settings/add')"
         class="w-[366px] h-12 flex uppercase justify-center gap-5 items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] bg-blue-bold text-white text-base"
       >
         Yangi xabar jo‘natish
@@ -139,9 +145,14 @@
               class="text-base font-[verdana-400] text-blue-bold flex items-center gap-10"
             >
               Joriy holat:
-              <span class="font-[verdana-700] "  :class="{ 'text-green': userInfo?.is_active, 'text-red-dark': !userInfo?.is_active }">{{
-                userInfo?.is_active ? "Aktiv" : "To‘xtatilgan"
-              }}</span>
+              <span
+                class="font-[verdana-700]"
+                :class="{
+                  'text-green': userInfo?.is_active,
+                  'text-red-dark': !userInfo?.is_active,
+                }"
+                >{{ userInfo?.is_active ? "Aktiv" : "To‘xtatilgan" }}</span
+              >
             </p>
             <p
               class="text-base font-[verdana-400] text-blue-bold flex items-center gap-10"
@@ -174,6 +185,109 @@
         </div>
       </div>
     </a-modal>
+    <a-modal
+      class="close-modal"
+      v-model="visibleUser"
+      :body-style="{ borderRadius: '20px' }"
+      centered
+      :closable="false"
+      width="1010px"
+      @ok="handleOk"
+    >
+      <div>
+        <div class="head">
+          <h4 class="text-[24px] font-[verdana-700] text-white text-center">
+            Yangi foydalanuvchi yaratish
+          </h4>
+        </div>
+        <div class="body pt-[28px] mb-12 flex justify-center">
+          <a-form-model class="w-full" :model="form" ref="ruleForm" :rules="rules">
+            <div class="flex flex-col gap-10">
+              <div class="grid grid-cols-1 w-full">
+                <a-form-model-item
+                  prop="deadline"
+                  class="form-item w-full mb-0"
+                  label="F.I.SH"
+                >
+                  <a-input v-model="form.name" placeholder="F.I.SH" />
+                </a-form-model-item>
+              </div>
+              <div class="grid grid-cols-1 w-full">
+                <a-form-model-item
+                  prop="deadline"
+                  class="form-item w-full mb-0"
+                  label="Viloyat"
+                >
+                  <a-select
+                    v-model="form.region_id"
+                    placeholder="Viloyot nomi"
+                    class="w-full"
+                  >
+                    <a-select-option
+                      :value="region?.id"
+                      v-for="region in regions"
+                      :key="region?.id"
+                    >
+                      {{ region?.name?.ru }}</a-select-option
+                    >
+                  </a-select>
+                </a-form-model-item>
+              </div>
+              <div class="grid grid-cols-1 w-full">
+                <a-form-model-item
+                  prop="deadline"
+                  class="form-item w-full mb-0"
+                  label="Login"
+                >
+                  <a-input
+                    v-model="form.login"
+                    placeholder="Klassifikatorning inglizcha nomini kiriting"
+                  />
+                </a-form-model-item>
+              </div>
+              <div class="grid grid-cols-1 w-full">
+                <a-form-model-item
+                  prop="deadline"
+                  class="form-item w-full mb-0"
+                  label="Parol"
+                >
+                  <a-input
+                    v-model="form.password"
+                    placeholder="Klassifikatorning inglizcha nomini kiriting"
+                  />
+                </a-form-model-item>
+              </div>
+              <div class="grid grid-cols-1 w-full">
+                <a-form-model-item
+                  prop="deadline"
+                  class="form-item w-full mb-0"
+                  label="Parol tasdiqlash"
+                >
+                  <a-input
+                    v-model="form.password"
+                    placeholder="Klassifikatorning inglizcha nomini kiriting"
+                  />
+                </a-form-model-item>
+              </div>
+            </div>
+          </a-form-model>
+        </div>
+        <div class="buttons flex justify-center gap-[30px]">
+          <button
+            @click="handleOk"
+            class="py-[13px] w-[360px] rounded-[8px] text-white bg-red-dark2 font-[verdana-400] text-base uppercase flex justify-center"
+          >
+            Bekor qilish
+          </button>
+          <button
+            @click="submit"
+            class="py-[13px] w-[360px] rounded-[8px] text-white bg-blue-bold font-[verdana-400] text-base uppercase flex justify-center"
+          >
+            Saqlash
+          </button>
+        </div>
+      </div>
+    </a-modal>
   </div>
 </template>
 
@@ -188,14 +302,25 @@ export default {
   },
   data() {
     return {
+      visibleUser: false,
       tabHandler: true,
       visible: false,
       editId: null,
       loading: false,
       totalPage: 1,
       text: "",
-      form: {},
-      rules: {},
+      regions: [],
+      form: {
+        name: "",
+        region_id: undefined,
+        login: "",
+        password: "",
+        password2: "",
+      },
+
+      rules: {
+        lon: [{ required: true, message: "This field is required", trigger: "change" }],
+      },
       users: [],
       userInfo: {},
       columns: [
@@ -302,10 +427,12 @@ export default {
   },
   mounted() {
     this.__GET_USERS();
+    this.__GET_REGIONS();
   },
   methods: {
     handleOk() {
       this.visible = false;
+      this.visibleUser = false
     },
     editData(obj) {
       this.editId = obj.id;
@@ -314,6 +441,12 @@ export default {
     },
     submit() {
       this.__EDIT_USERS({ is_active: this.userInfo?.is_active == 1 ? 0 : 1 });
+    },
+    async __GET_REGIONS() {
+      try {
+        const data = await this.$store.dispatch("fetchRegions/getRegions");
+        this.regions = data.data.data;
+      } catch (e) {}
     },
     async __GET_USERS() {
       try {
@@ -466,12 +599,18 @@ export default {
   background-color: transparent;
   height: 50px;
 }
+.form-item :deep(.ant-input::placeholder) {
+  color: #fff;
+}
+.form-item :deep(.ant-select-selection__placeholder) {
+  color: #fff;
+}
 .form-item :deep(.ant-select-selection--single) {
   border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid #fff;
   background-color: transparent;
   height: 50px;
-  color: #5a5a5a;
+  color: #fff;
   font-family: var(--v-regular);
   font-size: 16px;
   font-style: normal;

@@ -400,7 +400,6 @@ export default {
 :deep(.ant-modal-content) {
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.6);
-
   backdrop-filter: blur(16px);
 }
 

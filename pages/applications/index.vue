@@ -58,7 +58,7 @@
           <span
             :class="{
               'status-new': text == 'new',
-              'status-inactive': text == 'inactive',
+              'status-inactive': text == 'rejected',
               'status-progress': text == 'in_process',
               'status-success': text == 'accepted',
             }"
@@ -101,7 +101,7 @@ export default {
       totalPage: 1,
       statusTypes: {
         new: "Yangi",
-        error: "RAD ETILGAN",
+        rejected: "RAD ETILGAN",
         in_process: "HUJJATLAR KO‘RIB CHIQILMOQDA",
         accepted: "MUVAFFAQIYATLI YAKUNLANGAN",
       },
