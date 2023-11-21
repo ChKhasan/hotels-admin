@@ -205,7 +205,7 @@
             <div class="flex flex-col gap-10">
               <div class="grid grid-cols-1 w-full">
                 <a-form-model-item
-                  prop="deadline"
+                  prop="name"
                   class="form-item w-full mb-0"
                   label="F.I.SH"
                 >
@@ -214,7 +214,7 @@
               </div>
               <div class="grid grid-cols-1 w-full">
                 <a-form-model-item
-                  prop="deadline"
+                  prop="region_id"
                   class="form-item w-full mb-0"
                   label="Viloyat"
                 >
@@ -235,37 +235,31 @@
               </div>
               <div class="grid grid-cols-1 w-full">
                 <a-form-model-item
-                  prop="deadline"
+                  prop="username"
                   class="form-item w-full mb-0"
                   label="Login"
                 >
-                  <a-input
-                    v-model="form.login"
-                    placeholder="Klassifikatorning inglizcha nomini kiriting"
-                  />
+                  <a-input v-model="form.username" placeholder="Login" />
                 </a-form-model-item>
               </div>
               <div class="grid grid-cols-1 w-full">
                 <a-form-model-item
-                  prop="deadline"
+                  prop="password"
                   class="form-item w-full mb-0"
                   label="Parol"
                 >
-                  <a-input
-                    v-model="form.password"
-                    placeholder="Klassifikatorning inglizcha nomini kiriting"
-                  />
+                  <a-input v-model="form.password" placeholder="Parol" />
                 </a-form-model-item>
               </div>
               <div class="grid grid-cols-1 w-full">
                 <a-form-model-item
-                  prop="deadline"
+                  prop="password_confirmation"
                   class="form-item w-full mb-0"
                   label="Parol tasdiqlash"
                 >
                   <a-input
-                    v-model="form.password"
-                    placeholder="Klassifikatorning inglizcha nomini kiriting"
+                    v-model="form.password_confirmation"
+                    placeholder="Parol tasdiqlash"
                   />
                 </a-form-model-item>
               </div>
@@ -280,7 +274,7 @@
             Bekor qilish
           </button>
           <button
-            @click="submit"
+            @click="submitUser"
             class="py-[13px] w-[360px] rounded-[8px] text-white bg-blue-bold font-[verdana-400] text-base uppercase flex justify-center"
           >
             Saqlash
@@ -312,14 +306,26 @@ export default {
       regions: [],
       form: {
         name: "",
+        username: "",
         region_id: undefined,
-        login: "",
         password: "",
-        password2: "",
+        password_confirmation: "",
       },
 
       rules: {
-        lon: [{ required: true, message: "This field is required", trigger: "change" }],
+        name: [{ required: true, message: "This field is required", trigger: "change" }],
+        username: [
+          { required: true, message: "This field is required", trigger: "change" },
+        ],
+        region_id: [
+          { required: true, message: "This field is required", trigger: "change" },
+        ],
+        password: [
+          { required: true, message: "This field is required", trigger: "change" },
+        ],
+        password_confirmation: [
+          { required: true, message: "This field is required", trigger: "change" },
+        ],
       },
       users: [],
       userInfo: {},
@@ -432,7 +438,7 @@ export default {
   methods: {
     handleOk() {
       this.visible = false;
-      this.visibleUser = false
+      this.visibleUser = false;
     },
     editData(obj) {
       this.editId = obj.id;
@@ -441,6 +447,13 @@ export default {
     },
     submit() {
       this.__EDIT_USERS({ is_active: this.userInfo?.is_active == 1 ? 0 : 1 });
+    },
+    submitUser() {
+      this.$refs.ruleForm.validate((valid) => {
+        if (valid) {
+          this.__POST_USERS(this.form);
+        }
+      });
     },
     async __GET_REGIONS() {
       try {
@@ -488,6 +501,37 @@ export default {
           message: "Error",
           description: e.response.statusText,
         });
+      }
+    },
+    async __POST_USERS(form) {
+      try {
+        const data = await this.$store.dispatch("fetchUsers/postUsers", {
+          data: form,
+        });
+        this.__GET_USERS();
+        this.visibleUser = false;
+        this.$notification["success"]({
+          message: "Success",
+          description: "Успешно изменен",
+        });
+      } catch (e) {
+        this.$notification["error"]({
+          message: "Error",
+          description: e.response.statusText,
+        });
+      }
+    },
+  },
+  watch: {
+    visibleUser(val) {
+      if (!val) {
+        this.form = {
+          name: "",
+          username: "",
+          region_id: undefined,
+          password: "",
+          password_confirmation: "",
+        };
       }
     },
   },

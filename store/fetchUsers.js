@@ -26,4 +26,13 @@ export const actions = {
     });
     return res;
   },
+
+  async postUsers({}, payload) {
+    const res = await this.$axios.$post(`/users`, payload.data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+      },
+    });
+    return res;
+  },
 };
