@@ -1,6 +1,6 @@
 export const actions = {
-  async getHotels({}, payload) {
-    const res = await this.$axios.$get(`/hotels`, {
+  async getApp({}, payload) {
+    const res = await this.$axios.$get(`/applications`, {
       params: payload,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
@@ -8,8 +8,8 @@ export const actions = {
     });
     return res;
   },
-  async getHotelsById({}, id) {
-    const res = await this.$axios.$get(`/hotels/${id}`, {
+  async getAppById({}, id) {
+    const res = await this.$axios.$get(`/applications/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
@@ -17,8 +17,8 @@ export const actions = {
     return res;
   },
 
-  async editHotels({}, payload) {
-    const res = await this.$axios.$put(`/hotels/${payload.id}`, payload.data, {
+  async editApp({}, payload) {
+    const res = await this.$axios.$put(`/applications/${payload.id}`, payload.data, {
       params: {
         ...payload.params,
       },

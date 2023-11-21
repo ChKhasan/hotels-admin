@@ -590,7 +590,12 @@
           referrerpolicy="no-referrer-when-downgrade"
         ></iframe> -->
       </div>
-      <div class="buttons flex justify-center gap-6" v-if="info?.application_status != 'accepted' && info?.application_status != 'rejected'">
+      <div
+        class="buttons flex justify-center gap-6"
+        v-if="
+          info?.application_status != 'accepted' && info?.application_status != 'rejected'
+        "
+      >
         <button
           @click="visible = true"
           class="py-[13px] w-[366px] rounded-[8px] text-white bg-red-dark2 font-[verdana-400] text-base uppercase flex justify-center"
@@ -717,21 +722,21 @@ export default {
     },
     async __GET_APPLICATIONS(id) {
       try {
-        const data = await this.$store.dispatch("fetchHotels/getHotelsById", id);
-        this.form.address = data?.data?.address;
-        this.form.lat = data?.data?.lat;
-        this.form.lon = data?.data?.lon;
-        this.form.status = data?.data?.status;
-        this.form.name = data?.data?.name;
-        this.form.region_id = data?.data?.region?.id;
+        const data = await this.$store.dispatch("fetchApplications/getAppById", id);
+        this.form.address = data?.data?.hotel?.address;
+        this.form.lat = data?.data?.hotel?.lat;
+        this.form.lon = data?.data?.hotel?.lon;
+        this.form.status = data?.data?.hotel?.status;
+        this.form.name = data?.data?.hotel?.name;
+        this.form.region_id = data?.data?.hotel?.region?.id;
 
-        this.info = data?.data;
-        this.title = { ...data?.data?.name };
+        this.info = data?.data?.hotel;
+        this.title = { ...data?.data?.hotel?.name };
       } catch (e) {}
     },
     async __EDIT_APPLICATIONS(form, type) {
       try {
-        const data = await this.$store.dispatch("fetchHotels/editHotels", {
+        const data = await this.$store.dispatch("fetchApplications/editApp", {
           id: this.$route.params.id,
           data: form,
           params: {

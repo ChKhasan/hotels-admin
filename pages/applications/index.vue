@@ -67,7 +67,7 @@
           </span>
         </span>
         <span slot="name" slot-scope="text">
-          {{ text.length > 0 ? text : "----" }}
+          {{ text?.name > 0 ? text?.name : "----" }}
         </span>
         <span slot="end_date" slot-scope="text">
           {{ text ? text : "----" }}
@@ -116,8 +116,8 @@ export default {
         },
         {
           title: "Mehmon uyi nomi",
-          dataIndex: "documents",
-          key: "documents",
+          dataIndex: "hotel",
+          key: "hotel",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "name" },
           className: "column-text cursor-pointer",
@@ -140,8 +140,8 @@ export default {
         },
         {
           title: "Ariza holati",
-          dataIndex: "application_status",
-          key: "application_status",
+          dataIndex: "status",
+          key: "status",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "status" },
           className: "column-status",
@@ -164,10 +164,9 @@ export default {
     async __GET_HOTELS() {
       try {
         this.loading = true;
-        const data = await this.$store.dispatch("fetchHotels/getHotels", {
+        const data = await this.$store.dispatch("fetchApplications/getApp", {
           page: 1,
           page_size: 16,
-          applications: 1,
           ...this.$route.query,
         });
         this.hotels = data.data.data.map((item) => {
