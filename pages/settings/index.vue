@@ -23,10 +23,10 @@
         </button>
       </div>
       <button
-      @click="visibleUser = true"
+        @click="visibleUser = true"
         class="px-6 h-12 flex uppercase justify-center gap-5 items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] bg-blue-bold text-white text-base"
       >
-      Yangi xabar foydalanuvchi yaratish
+        Yangi xabar foydalanuvchi yaratish
         <svg
           width="24"
           height="24"
@@ -607,9 +607,9 @@ export default {
   color: var(--green);
 }
 :deep(.ant-table-tbody
-    > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)
+    > tr:nth-child(2n):hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)
     > td) {
-  background-color: rgba(255, 255, 255, 0.36);
+  background: #002144;
 }
 /* table  */
 .search-block {
