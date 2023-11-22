@@ -298,7 +298,7 @@ export default {
         this.visible = false;
         this.$notification["success"]({
           message: "Success",
-          description: "Успешно изменен",
+          description: "Viloyat muvaffaqiyatli o'zgartirildi",
         });
       } catch (e) {
         this.$notification["error"]({
