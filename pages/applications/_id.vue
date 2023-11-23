@@ -843,14 +843,14 @@
       <div
         class="buttons flex justify-center gap-6"
         v-if="
-          info?.application_status != 'accepted' && info?.application_status != 'rejected'
+          files?.status != 'accepted' && files?.status != 'rejected'
         "
       >
         <button
           @click="visible = true"
           class="py-[13px] w-[366px] rounded-[8px] text-white bg-red-dark2 font-[verdana-400] text-base uppercase flex justify-center"
         >
-          Rad etish
+          Rad etish 
         </button>
         <button
           @click="submit('accept')"
