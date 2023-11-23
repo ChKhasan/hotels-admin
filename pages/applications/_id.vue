@@ -51,7 +51,7 @@
           <p class="text-white font-[verdana-400] text-base">
             Oilaviy mehmon uyi joylashgan hudud
           </p>
-          <h5 class="text-[24px] text-white font-bold">{{ info?.region?.name?.uz }}</h5>
+          <h5 class="text-[24px] text-white font-bold">{{ info?.region?.name?.uz || '----' }}</h5>
         </div>
         <div
           class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"

@@ -108,10 +108,14 @@ export default {
       columnOrders: [
         {
           title: "Reyestr raqami",
-          dataIndex: "indexId",
-          key: "indexId",
+          dataIndex: "register_number",
+          key: "register_number",
+          key: "register_number",
+          customRender: (text) => {
+            return text || "---";
+          },
           slots: { title: "customTitle" },
-          scopedSlots: { customRender: "indexId" },
+          scopedSlots: { customRender: "register_number" },
           className: "column-text cursor-pointer",
         },
         {
