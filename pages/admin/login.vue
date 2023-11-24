@@ -185,7 +185,7 @@ export default {
     async __AUTH_ONEID(data) {
       try {
         const res = await this.$store.dispatch("fetchAuth/authByOneID", data);
-        localStorage.setItem("auth_token", res.data?.data?.token);
+        localStorage.setItem("auth_token", res.data?.token);
         this.$store.commit("logIn");
         this.$router.push("/");
       } catch (e) {
