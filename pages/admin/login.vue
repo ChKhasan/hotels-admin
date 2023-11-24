@@ -40,16 +40,19 @@
           </div>
         </div>
       </div>
+      <Loader v-if="loading"/>
     </div>
   </div>
 </template>
 <script>
+import Loader from "@/components/loader.vue";
 export default {
   layout: "empty",
   middleware: "login",
   data() {
     return {
       link: "",
+      loading: false,
     };
   },
   async mounted() {
@@ -73,17 +76,23 @@ export default {
     },
     async __AUTH_ONEID(data) {
       try {
+        this.loading = true;
         const res = await this.$store.dispatch("fetchAuth/authByOneID", data);
         localStorage.setItem("auth_token", res.data?.token);
         this.$store.commit("logIn");
         this.$router.push("/");
       } catch (e) {
+        this.loading = false;
         this.$notification["error"]({
           message: "Error",
           description: e.response.statusText,
         });
+      } finally {
       }
     },
+  },
+  components: {
+    Loader,
   },
 };
 </script>
