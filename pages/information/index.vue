@@ -1,13 +1,13 @@
 <template>
   <div class="max-w-[1536px] mx-auto py-10">
     <div class="search mb-[60px]">
-      <div class="flex gap-6 justify-center">
+      <div class="grid gap-6 justify-start grid-cols-2 w-[50%]">
         <button
           :class="{ 'bg-blue-bold text-white': $route.name == 'information' }"
           @click="$router.push('/information')"
           class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
         >
-          Viloyatlar 
+          Viloyatlar
         </button>
         <button
           :class="{ 'bg-blue-bold text-white': $route.name == 'information-additional' }"
@@ -15,6 +15,20 @@
           class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
         >
           Qo‘shimcha
+        </button>
+        <button
+          :class="{ 'bg-blue-bold text-white': $route.name == 'information-reasons' }"
+          @click="$router.push('/information/reasons')"
+          class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
+        >
+          Rad etish sabablari
+        </button>
+        <button
+          :class="{ 'bg-blue-bold text-white': $route.name == 'information-additional_services' }"
+          @click="$router.push('/information/additional_services')"
+          class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
+        >
+          Qo'shimcha xizmatlar
         </button>
       </div>
     </div>
@@ -249,7 +263,6 @@ export default {
     this.__GET_REGIONS();
   },
   methods: {
- 
     handleOk() {
       this.visible = false;
     },
@@ -376,7 +389,7 @@ export default {
 :deep(.ant-table-tbody
     > tr:nth-child(2n):hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)
     > td) {
-  background: #002144
+  background: #002144;
 }
 /* table  */
 .search-block {
