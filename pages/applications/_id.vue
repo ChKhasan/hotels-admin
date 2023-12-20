@@ -860,13 +860,13 @@
           </div>
           <!-- </a-form-model> -->
         </div>
-        <div class="map min-h-[700px]">
+        <div class="map min-h-[350px] w-[50%] mx-auto">
           <yandex-map
             @click="onClick"
             :coords="coords"
             :zoom="10"
-            style="height: 700px"
-            class="min-h-[700px]"
+            style="height: 350px"
+            class="min-h-[350px]"
           >
             <ymap-marker :coords="coords" marker-id="123" hint-content="some hint" />
           </yandex-map>
