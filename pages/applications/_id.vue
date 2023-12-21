@@ -783,14 +783,14 @@
                 <a-input v-model="form.address.en" placeholder="Tashkilot manzili..." />
               </a-form-model-item>
             </div>
-            <div class="grid grid-cols-2 gap-6">
-              <a-form-model-item
+            <div class="grid grid-cols-1 gap-6">
+              <!-- <a-form-model-item
                 prop="name"
                 class="form-item w-full mb-0"
                 label="Xostel nomi"
               >
                 <a-input v-model="form.name" placeholder="Lokomotiv hostel" />
-              </a-form-model-item>
+              </a-form-model-item> -->
               <a-form-model-item
                 prop="region_id"
                 class="form-item w-full mb-0"
@@ -1039,7 +1039,7 @@ export default {
       services: [],
       reasons: [],
       form: {
-        name: "",
+        // name: "",
         lat: "",
         lon: "",
         status: "",
@@ -1134,7 +1134,7 @@ export default {
         this.form.lat = data?.data?.hotel?.lat;
         this.form.lon = data?.data?.hotel?.lon;
         this.form.status = data?.data?.status;
-        this.form.name = data?.data?.hotel?.name;
+        // this.form.name = data?.data?.hotel?.name;
         this.form.region_id = data?.data?.hotel?.region?.id;
         this.files = data?.data;
         this.info = data?.data?.hotel;
