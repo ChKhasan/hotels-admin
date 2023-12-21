@@ -860,11 +860,17 @@
           </div>
           <!-- </a-form-model> -->
         </div>
-        <div class="map min-h-[350px] w-[50%] mx-auto">
+        <div
+          class="map min-h-[350px] w-[50%] mx-auto"
+          :class="{
+            'pointer-events-none':
+              files?.status == 'accepted' || files?.status == 'rejected',
+          }"
+        >
           <yandex-map
             @click="onClick"
             :coords="coords"
-            :zoom="10"
+            :settings="mapSettings"
             style="height: 350px"
             class="min-h-[350px]"
           >
@@ -891,7 +897,7 @@
             Rad etish
           </button>
           <button
-          @click="submit('accept')"
+            @click="submit('accept')"
             class="py-[13px] w-[366px] rounded-[8px] text-white bg-blue-bold font-[verdana-400] text-base uppercase flex justify-center"
           >
             Tasdiqlash va reyestrga kiritish
@@ -1013,6 +1019,12 @@
 export default {
   data() {
     return {
+      mapSettings: {
+        zoom: 1, // Initial zoom level
+        maxZoom: 4, // Set the maximum zoom level
+        minZoom: 4, // Set the maximum zoom level
+        // Other map settings...
+      },
       visible: false,
       visibleAccept: false,
       coords: [41.311081, 69.240562],
