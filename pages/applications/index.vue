@@ -73,7 +73,7 @@
           {{ text ? text : "----" }}
         </span>
         <span slot="begin_date" slot-scope="text">
-          {{ text ? moment(text).format("DD.MM.YYYY - HH-MM") : "----" }}
+          {{ text ? moment(text).format("DD.MM.YYYY - HH:mm") : "----" }}
         </span>
       </a-table>
     </div>
@@ -125,14 +125,14 @@ export default {
         //   scopedSlots: { customRender: "register_number" },
         //   className: "column-text cursor-pointer",
         // },
-        {
-          title: "Mehmon uyi nomi",
-          dataIndex: "hotel",
-          key: "hotel",
-          slots: { title: "customTitle" },
-          scopedSlots: { customRender: "name" },
-          className: "column-text cursor-pointer",
-        },
+        // {
+        //   title: "Mehmon uyi nomi",
+        //   dataIndex: "hotel",
+        //   key: "hotel",
+        //   slots: { title: "customTitle" },
+        //   scopedSlots: { customRender: "name" },
+        //   className: "column-text cursor-pointer",
+        // },
         {
           title: "Ariza kelib tushgan sana",
           dataIndex: "created_at",
