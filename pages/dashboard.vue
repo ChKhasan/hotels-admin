@@ -135,7 +135,6 @@
 </template>
 <script>
 export default {
-  middleware: "dashboard",
   data() {
     return {
       dashboard: {},
