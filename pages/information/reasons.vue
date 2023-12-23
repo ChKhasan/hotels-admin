@@ -3,35 +3,39 @@
     <div class="search mb-[60px]">
       <div class="flex justify-between">
         <div class="grid gap-6 justify-start grid-cols-2 w-[50%]">
-        <button
-          :class="{ 'bg-blue-bold text-white': $route.name == 'information' }"
-          @click="$router.push('/information')"
-          class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
-        >
-          Viloyatlar
-        </button>
-        <button
-          :class="{ 'bg-blue-bold text-white': $route.name == 'information-additional' }"
-          @click="$router.push('/information/additional')"
-          class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
-        >
-          Qo‘shimcha
-        </button>
-        <button
-          :class="{ 'bg-blue-bold text-white': $route.name == 'information-reasons' }"
-          @click="$router.push('/information/reasons')"
-          class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
-        >
-          Rad etish sabablari
-        </button>
-        <button
-          :class="{ 'bg-blue-bold text-white': $route.name == 'information-additional_services' }"
-          @click="$router.push('/information/additional_services')"
-          class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
-        >
-          Qo'shimcha xizmatlar
-        </button>
-      </div>
+          <button
+            :class="{ 'bg-blue-bold text-white': $route.name == 'information' }"
+            @click="$router.push('/information')"
+            class="w-full h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
+          >
+            Viloyatlar
+          </button>
+          <button
+            :class="{
+              'bg-blue-bold text-white': $route.name == 'information-additional',
+            }"
+            @click="$router.push('/information/additional')"
+            class="w-full h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
+          >
+            Qo‘shimcha
+          </button>
+          <button
+            :class="{ 'bg-blue-bold text-white': $route.name == 'information-reasons' }"
+            @click="$router.push('/information/reasons')"
+            class="w-full h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
+          >
+            Rad etish sabablari
+          </button>
+          <button
+            :class="{
+              'bg-blue-bold text-white': $route.name == 'information-additional_services',
+            }"
+            @click="$router.push('/information/additional_services')"
+            class="w-full h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
+          >
+            Qo'shimcha xizmatlar
+          </button>
+        </div>
         <button
           @click="visibleReason = true"
           class="px-6 h-12 flex uppercase justify-center gap-5 items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] bg-blue-bold text-white text-base"

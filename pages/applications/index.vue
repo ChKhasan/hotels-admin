@@ -107,17 +107,24 @@ export default {
       },
       columnOrders: [
         {
-          title: "Reyestr raqami",
-          dataIndex: "register_number",
-          key: "register_number",
-          key: "register_number",
-          customRender: (text) => {
-            return text || "---";
-          },
-          slots: { title: "customTitle" },
-          scopedSlots: { customRender: "register_number" },
+          title: "№",
+          dataIndex: "key",
+          key: "key",
+          customRender: (text) => `#${text}`,
           className: "column-text cursor-pointer",
         },
+        // {
+        //   title: "Reyestr raqami",
+        //   dataIndex: "register_number",
+        //   key: "register_number",
+        //   key: "register_number",
+        //   customRender: (text) => {
+        //     return text || "---";
+        //   },
+        //   slots: { title: "customTitle" },
+        //   scopedSlots: { customRender: "register_number" },
+        //   className: "column-text cursor-pointer",
+        // },
         {
           title: "Mehmon uyi nomi",
           dataIndex: "hotel",
@@ -164,6 +171,9 @@ export default {
     clickRow(obj) {
       this.$router.push(`/applications/${obj?.id}`);
     },
+    indexPage(current_page, per_page) {
+      return (current_page * 1 - 1) * per_page + 1;
+    },
     moment,
     async __GET_HOTELS() {
       try {
@@ -173,10 +183,12 @@ export default {
           page_size: 16,
           ...this.$route.query,
         });
-        this.hotels = data.data.data.map((item) => {
+        const pageIndex = this.indexPage(data?.data?.current_page, data?.data?.per_page);
+        this.hotels = data.data.data.map((item, index) => {
           return {
             ...item,
             indexId: item.id,
+            key: index + pageIndex,
           };
         });
         this.totalPage = data.data.total;
@@ -273,7 +285,7 @@ export default {
 :deep(.ant-table-tbody
     > tr:nth-child(2n):hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)
     > td) {
-  background: #002144
+  background: #002144;
 }
 /* table  */
 .search-block {
