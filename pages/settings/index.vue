@@ -212,7 +212,7 @@
                   <a-input v-model="form.name" placeholder="F.I.SH" />
                 </a-form-model-item>
               </div>
-              <div class="grid grid-cols-1 w-full">
+              <div class="grid grid-cols-1 w-full" v-if="regionHandle">
                 <a-form-model-item
                   prop="region_id"
                   class="form-item w-full mb-0"
@@ -235,6 +235,23 @@
               </div>
               <div class="grid grid-cols-1 w-full">
                 <a-form-model-item
+                  prop="region_id"
+                  class="form-item w-full mb-0"
+                  label="Admin turi"
+                >
+                  <a-select v-model="form.role" placeholder="Admin turi" class="w-full">
+                    <a-select-option
+                      :value="admin?.value"
+                      v-for="admin in adminTypes"
+                      :key="admin?.value"
+                    >
+                      {{ admin?.label }}</a-select-option
+                    >
+                  </a-select>
+                </a-form-model-item>
+              </div>
+              <div class="grid grid-cols-1 w-full">
+                <a-form-model-item
                   prop="username"
                   class="form-item w-full mb-0"
                   label="JSHSHIR"
@@ -242,7 +259,6 @@
                   <a-input v-model="form.pin" placeholder="JSHSHIR" />
                 </a-form-model-item>
               </div>
-             
             </div>
           </a-form-model>
         </div>
@@ -276,6 +292,24 @@ export default {
   },
   data() {
     return {
+      adminTypes: [
+        {
+          label: "Admin",
+          value: "admin",
+        },
+        {
+          label: "Viloyat bo'yicha admin",
+          value: "region_admin",
+        },
+        {
+          label: "Qo'mita rahbariyati",
+          value: "committee",
+        },
+        {
+          label: "Viloyat bo'yicha admin 2",
+          value: "region_subadmin",
+        },
+      ],
       visibleUser: false,
       tabHandler: true,
       visible: false,
@@ -284,10 +318,12 @@ export default {
       totalPage: 1,
       text: "",
       regions: [],
+      regionHandle: true,
       form: {
         name: "",
         pin: "",
         region_id: undefined,
+        role: undefined,
       },
 
       rules: {
@@ -401,6 +437,11 @@ export default {
       ],
     };
   },
+  computed: {
+    adminTypeHandle() {
+      return this.form.role;
+    },
+  },
   mounted() {
     this.__GET_USERS();
     this.__GET_REGIONS();
@@ -509,6 +550,26 @@ export default {
           password: "",
           password_confirmation: "",
         };
+      }
+    },
+    adminTypeHandle(val) {
+      switch (val) {
+        case "admin":
+          delete this.form.region_id;
+          this.regionHandle = false;
+          break;
+        case "committee":
+          delete this.form.region_id;
+          this.regionHandle = false;
+          break;
+        case "region_admin":
+          this.form.region_id = undefined;
+          this.regionHandle = true;
+          break;
+        case "region_subadmin":
+          this.form.region_id = undefined;
+          this.regionHandle = true;
+          break;
       }
     },
   },
