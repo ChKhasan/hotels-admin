@@ -24,7 +24,9 @@
           Rad etish sabablari
         </button>
         <button
-          :class="{ 'bg-blue-bold text-white': $route.name == 'information-additional_services' }"
+          :class="{
+            'bg-blue-bold text-white': $route.name == 'information-additional_services',
+          }"
           @click="$router.push('/information/additional_services')"
           class="w-full h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-700] text-blue-bold text-base"
         >
@@ -41,7 +43,11 @@
         :pagination="false"
         align="center"
       >
-        <span slot="indexId" slot-scope="text" v-if="$store.state.profileInfo?.role != 'committee'">
+        <span
+          slot="indexId"
+          slot-scope="text"
+          v-if="$store.state.profileInfo?.role != 'committee'"
+        >
           <span class="flex gap-5 justify-end">
             <!-- <button>
               <svg
@@ -67,7 +73,7 @@
                 />
               </svg>
             </button> -->
-            <button class="edit" @click="editData(text)"  >
+            <button class="edit" @click="editData(text)">
               <svg
                 width="16"
                 height="16"
@@ -205,6 +211,8 @@
 import VPagination from "@/components/VPagination.vue";
 export default {
   name: "IndexPage",
+  middleware: "admin",
+
   head() {
     return {
       title: "Qo'shimchalar",

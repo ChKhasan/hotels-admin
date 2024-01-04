@@ -15,6 +15,10 @@
           Foydalanuvchilar
         </button>
         <button
+          v-if="
+            $store.state.profileInfo?.role == 'admin' ||
+            $store.state.profileInfo?.role == 'committee'
+          "
           :class="{ 'bg-blue-bold text-white': $route.name == 'settings-messages' }"
           @click="$router.push('/settings/messages')"
           class="w-[366px] h-12 flex uppercase justify-center items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] text-blue-bold text-base"
@@ -24,6 +28,10 @@
       </div>
       <button
         @click="visibleUser = true"
+        v-if="
+          $store.state.profileInfo?.role != 'region_subadmin' &&
+          $store.state.profileInfo?.role != 'committee'
+        "
         class="px-6 h-12 flex uppercase justify-center gap-5 items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] bg-blue-bold text-white text-base"
       >
         Yangi foydalanuvchi yaratish
@@ -68,7 +76,7 @@
         align="center"
       >
         <span slot="name" slot-scope="text"> {{ text?.name }} {{ text?.username }} </span>
-        <span slot="role" slot-scope="text"> {{ text ? text : "----" }} </span>
+        <span slot="role" slot-scope="text"> {{ text ? adminTable[text] : "----" }} </span>
         <span slot="status" slot-scope="text">
           <span
             :class="{
@@ -298,11 +306,11 @@ export default {
     return {
       adminTypes: [
         {
-          label: "Admin",
+          label: "Tizim ma'muri",
           value: "admin",
         },
         {
-          label: "Viloyat bo'yicha admin",
+          label: "Bo'lim ma'muri",
           value: "region_admin",
         },
         {
@@ -310,10 +318,17 @@ export default {
           value: "committee",
         },
         {
-          label: "Viloyat bo'yicha admin 2",
+          label: "Bo'lim hodimi",
           value: "region_subadmin",
         },
       ],
+      adminTable: {
+        admin: "Tizim ma'muri",
+        region_subadmin: "Bo'lim hodimi",
+        region_admin: "Bo'lim ma'muri",
+        committee: "Qo'mita rahbariyati",
+      },
+
       visibleUser: false,
       tabHandler: true,
       visible: false,

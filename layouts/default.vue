@@ -158,7 +158,7 @@
                     >Arizalar</nuxt-link
                   >
                 </li>
-                <li>
+                <li v-if="$store.state.profileInfo?.role == 'admin'">
                   <nuxt-link
                     to="/information"
                     :class="{

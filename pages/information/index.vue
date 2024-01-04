@@ -202,6 +202,7 @@
 import VPagination from "@/components/VPagination.vue";
 export default {
   name: "IndexPage",
+  middleware: "admin",
   head() {
     return {
       title: "Viloyatlar",

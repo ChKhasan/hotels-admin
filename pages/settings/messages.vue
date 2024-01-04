@@ -17,6 +17,7 @@
         </button>
       </div>
       <button
+        v-if="$store.state.profileInfo?.role == 'committee'"
         @click="$router.push('/settings/add')"
         class="w-[366px] h-12 flex uppercase justify-center gap-5 items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] bg-blue-bold text-white text-base"
       >
@@ -113,6 +114,7 @@ import VPagination from "@/components/VPagination.vue";
 import moment from "moment";
 export default {
   name: "IndexPage",
+  middleware: "messages",
   head() {
     return {
       title: "Xabarlar",
@@ -247,7 +249,7 @@ export default {
 :deep(.ant-table-tbody
     > tr:nth-child(2n):hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)
     > td) {
-  background: #002144
+  background: #002144;
 }
 /* table  */
 .search-block {
