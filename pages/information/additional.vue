@@ -41,7 +41,7 @@
         :pagination="false"
         align="center"
       >
-        <span slot="indexId" slot-scope="text">
+        <span slot="indexId" slot-scope="text" v-if="$store.state.profileInfo?.role != 'committee'">
           <span class="flex gap-5 justify-end">
             <!-- <button>
               <svg
@@ -67,7 +67,7 @@
                 />
               </svg>
             </button> -->
-            <button class="edit" @click="editData(text)">
+            <button class="edit" @click="editData(text)"  >
               <svg
                 width="16"
                 height="16"

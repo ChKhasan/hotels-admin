@@ -81,7 +81,11 @@
         </span>
         <span slot="indexId" slot-scope="text">
           <span class="flex gap-5 justify-end">
-            <button class="edit" @click="editData(text)">
+            <button
+              class="edit"
+              @click="editData(text)"
+              v-if="$store.state.profileInfo?.role != 'committee'"
+            >
               <svg
                 width="16"
                 height="16"
