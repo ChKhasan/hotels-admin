@@ -183,7 +183,7 @@
                 >
                   <a-input
                     v-model="form.name.uz"
-                    placeholder="Klassifikatorning o‘zbekcha nomini kiriting"
+                    placeholder="Viloyatni o‘zbekcha nomini kiriting"
                   />
                 </a-form-model-item>
               </div>
@@ -191,7 +191,7 @@
                 <a-form-model-item class="form-item w-full mb-0" label="RU">
                   <a-input
                     v-model="form.name.ru"
-                    placeholder="Klassifikatorning ruscha nomini kiriting"
+                    placeholder="Viloyatni ruscha nomini kiriting"
                   />
                 </a-form-model-item>
               </div>
@@ -199,7 +199,7 @@
                 <a-form-model-item class="form-item w-full mb-0" label="EN">
                   <a-input
                     v-model="form.name.en"
-                    placeholder="Klassifikatorning inglizcha nomini kiriting"
+                    placeholder="Viloyatni inglizcha nomini kiriting"
                   />
                 </a-form-model-item>
               </div>
