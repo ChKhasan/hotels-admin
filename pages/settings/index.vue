@@ -330,7 +330,6 @@ export default {
         region_admin: "Bo'lim ma'muri",
         committee: "Qo'mita rahbariyati",
       },
-
       visibleUser: false,
       tabHandler: true,
       visible: false,

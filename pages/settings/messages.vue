@@ -17,7 +17,7 @@
         </button>
       </div>
       <button
-        v-if="$store.state.profileInfo?.role == 'committee'"
+        v-if="$store.state.profileInfo?.role == 'committee' || $store.state.profileInfo?.role == 'admin'"
         @click="$router.push('/settings/add')"
         class="w-[366px] h-12 flex uppercase justify-center gap-5 items-center border border-solid border-blue-bold rounded-[8px] font-[verdana-400] bg-blue-bold text-white text-base"
       >
