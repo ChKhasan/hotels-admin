@@ -206,7 +206,6 @@ export default {
     async __GET_DASHBOARD() {
       try {
         const data = await this.$store.dispatch("fetchDashboard/getDashboard");
-        console.log(data);
         this.chartOptionsHorizontal.xaxis.categories = data?.data?.hotels.map(
           (item) => item?.region_name
         );
