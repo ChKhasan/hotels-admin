@@ -76,7 +76,9 @@
         align="center"
       >
         <span slot="name" slot-scope="text"> {{ text?.name }} {{ text?.username }} </span>
-        <span slot="role" slot-scope="text"> {{ text ? adminTable[text] : "----" }} </span>
+        <span slot="role" slot-scope="text">
+          {{ text ? adminTable[text] : "----" }}
+        </span>
         <span slot="status" slot-scope="text">
           <span
             :class="{
@@ -224,7 +226,7 @@
                   <a-input v-model="form.name" placeholder="F.I.SH" />
                 </a-form-model-item>
               </div>
-              <div class="grid grid-cols-1 w-full" v-if="regionHandle">
+              <div class="grid grid-cols-1 w-full" v-if="regionHandle && $store.state.profileInfo.role == 'admin'">
                 <a-form-model-item
                   prop="region_id"
                   class="form-item w-full mb-0"
@@ -245,7 +247,7 @@
                   </a-select>
                 </a-form-model-item>
               </div>
-              <div class="grid grid-cols-1 w-full">
+              <div class="grid grid-cols-1 w-full" v-if="$store.state.profileInfo.role == 'admin'">
                 <a-form-model-item
                   prop="region_id"
                   class="form-item w-full mb-0"
@@ -464,6 +466,14 @@ export default {
   mounted() {
     this.__GET_USERS();
     this.__GET_REGIONS();
+    if (this.$store.state.profileInfo.role == "admin") {
+      this.form.region_id = undefined;
+      this.form.role = undefined;
+    }
+    if (this.$store.state.profileInfo.role == "region_admin") {
+      delete this.form.region_id;
+      delete this.form.role;
+    }
   },
   methods: {
     handleOk() {
