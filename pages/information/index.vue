@@ -306,7 +306,6 @@ export default {
     editData(id) {
       this.visible = true;
       this.editId = id;
-      console.log(id);
       this.__GET_REGION(id);
     },
     submit() {
