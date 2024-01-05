@@ -226,7 +226,10 @@
                   <a-input v-model="form.name" placeholder="F.I.SH" />
                 </a-form-model-item>
               </div>
-              <div class="grid grid-cols-1 w-full" v-if="regionHandle && $store.state.profileInfo.role == 'admin'">
+              <div
+                class="grid grid-cols-1 w-full"
+                v-if="regionHandle && $store.state.profileInfo.role == 'admin'"
+              >
                 <a-form-model-item
                   prop="region_id"
                   class="form-item w-full mb-0"
@@ -247,7 +250,10 @@
                   </a-select>
                 </a-form-model-item>
               </div>
-              <div class="grid grid-cols-1 w-full" v-if="$store.state.profileInfo.role == 'admin'">
+              <div
+                class="grid grid-cols-1 w-full"
+                v-if="$store.state.profileInfo.role == 'admin'"
+              >
                 <a-form-model-item
                   prop="region_id"
                   class="form-item w-full mb-0"
@@ -464,12 +470,13 @@ export default {
   },
   mounted() {
     this.__GET_USERS();
-    this.__GET_REGIONS();
     if (this.$store.state.profileInfo.role == "admin") {
+      this.__GET_REGIONS();
       this.form.region_id = undefined;
       this.form.role = undefined;
     }
     if (this.$store.state.profileInfo.role == "region_admin") {
+      this.__GET_REGIONS();
       delete this.form.region_id;
       delete this.form.role;
     }
