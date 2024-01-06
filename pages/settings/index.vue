@@ -270,7 +270,7 @@
                   </a-select>
                 </a-form-model-item>
               </div>
-          
+
               <div class="grid grid-cols-1 w-full">
                 <a-form-model-item
                   prop="pin"
@@ -496,6 +496,13 @@ export default {
       this.__EDIT_USERS({ is_active: this.userInfo?.is_active == 1 ? 0 : 1 });
     },
     submitUser() {
+      const data = {
+        ...this.form,
+      };
+      if (!this.form.region_id) {
+        delete data.region_id;
+      }
+      console.log(data);
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           if (this.form.password != this.form.password_confirmation) {
@@ -504,7 +511,7 @@ export default {
               description: "Пожалуйста, перепроверьте пароль",
             });
           } else {
-            this.__POST_USERS(this.form);
+            // this.__POST_USERS(this.form);
           }
         }
       });
@@ -589,24 +596,26 @@ export default {
       }
     },
     adminTypeHandle(val) {
+      this.form.region_id = undefined;
       switch (val) {
         case "admin":
-          delete this.form.region_id;
+          // delete this.form.region_id;
           this.regionHandle = false;
           break;
         case "committee":
-          delete this.form.region_id;
+          // delete this.form.region_id;
           this.regionHandle = false;
           break;
         case "region_admin":
-          this.form.region_id = undefined;
+          // this.form.region_id = undefined;
           this.regionHandle = true;
           break;
         case "region_subadmin":
-          this.form.region_id = undefined;
+          // this.form.region_id = undefined;
           this.regionHandle = true;
           break;
       }
+      console.log(this.form);
     },
   },
   components: {
