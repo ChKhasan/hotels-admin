@@ -502,7 +502,7 @@ export default {
       if (!this.form.region_id) {
         delete data.region_id;
       }
-      console.log(data);
+ 
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           if (this.form.password != this.form.password_confirmation) {
@@ -511,7 +511,7 @@ export default {
               description: "Пожалуйста, перепроверьте пароль",
             });
           } else {
-            // this.__POST_USERS(this.form);
+            this.__POST_USERS(this.form);
           }
         }
       });
@@ -615,7 +615,6 @@ export default {
           this.regionHandle = true;
           break;
       }
-      console.log(this.form);
     },
   },
   components: {
