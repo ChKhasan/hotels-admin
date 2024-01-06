@@ -217,6 +217,26 @@
         <div class="body pt-[28px] mb-12 flex justify-center">
           <a-form-model class="w-full" :model="form" ref="ruleForm" :rules="rules">
             <div class="flex flex-col gap-10">
+              <div
+                class="grid grid-cols-1 w-full"
+                v-if="$store.state.profileInfo.role == 'admin'"
+              >
+                <a-form-model-item
+                  prop="role"
+                  class="form-item w-full mb-0"
+                  label="Admin turi"
+                >
+                  <a-select v-model="form.role" placeholder="Admin turi" class="w-full">
+                    <a-select-option
+                      :value="admin?.value"
+                      v-for="admin in adminTypes"
+                      :key="admin?.value"
+                    >
+                      {{ admin?.label }}</a-select-option
+                    >
+                  </a-select>
+                </a-form-model-item>
+              </div>
               <div class="grid grid-cols-1 w-full">
                 <a-form-model-item
                   prop="name"
@@ -250,29 +270,10 @@
                   </a-select>
                 </a-form-model-item>
               </div>
-              <div
-                class="grid grid-cols-1 w-full"
-                v-if="$store.state.profileInfo.role == 'admin'"
-              >
-                <a-form-model-item
-                  prop="region_id"
-                  class="form-item w-full mb-0"
-                  label="Admin turi"
-                >
-                  <a-select v-model="form.role" placeholder="Admin turi" class="w-full">
-                    <a-select-option
-                      :value="admin?.value"
-                      v-for="admin in adminTypes"
-                      :key="admin?.value"
-                    >
-                      {{ admin?.label }}</a-select-option
-                    >
-                  </a-select>
-                </a-form-model-item>
-              </div>
+          
               <div class="grid grid-cols-1 w-full">
                 <a-form-model-item
-                  prop="username"
+                  prop="pin"
                   class="form-item w-full mb-0"
                   label="JSHSHIR"
                 >
@@ -344,7 +345,7 @@ export default {
       totalPage: 1,
       text: "",
       regions: [],
-      regionHandle: true,
+      regionHandle: false,
       form: {
         name: "",
         pin: "",
