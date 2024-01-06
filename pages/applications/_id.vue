@@ -889,7 +889,7 @@
         <div
           class="buttons flex justify-center gap-6"
           v-if="
-            (files?.status != 'accepted' && files?.status != 'rejected') ||
+            (files?.status != 'accepted' && files?.status != 'rejected') &&
             $store.state.profileInfo?.role == 'region_subadmin'
           "
         >
