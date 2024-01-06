@@ -511,7 +511,7 @@ export default {
               description: "Пожалуйста, перепроверьте пароль",
             });
           } else {
-            this.__POST_USERS(this.form);
+            this.__POST_USERS(data);
           }
         }
       });
