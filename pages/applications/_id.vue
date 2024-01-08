@@ -104,8 +104,7 @@
               Oilaviy mehmon uyi rahbari
             </p>
             <h5 class="text-[24px] text-white font-bold">
-              {{ info?.director_surname }} {{ info?.director_name }}
-              {{ info?.director_fathers_name }}
+              {{ info?.director_full_name }}
             </h5>
           </div>
         </div>
