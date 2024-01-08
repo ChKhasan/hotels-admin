@@ -94,7 +94,10 @@
             <button
               class="edit"
               @click="editData(text)"
-              v-if="$store.state.profileInfo?.role != 'committee'"
+              v-if="
+                $store.state.profileInfo?.role != 'committee' &&
+                $store.state.profileInfo?.role != 'region_subadmin'
+              "
             >
               <svg
                 width="16"
