@@ -7,20 +7,27 @@
             Xostellar, oʼtovli va chodirli oromgohlar soni
           </p>
           <h4 class="text-[24px] text-[#437FEC] font-bold">
-            {{ `${dashboard?.allHotelsCount || 0}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")  }}
+            {{
+              `${dashboard?.allHotelsCount || 0}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+            }}
           </h4>
         </div>
         <div class="py-3 bg-white rounded-[10px] px-6 flex flex-col gap-3">
           <p class="text-base font-semibold">Aktiv mehmon uylari</p>
           <h4 class="text-[24px] text-[#00B55D] font-bold">
-            {{ `${dashboard?.activeHotelsCount || 0}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
+            {{
+              `${dashboard?.activeHotelsCount || 0}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+            }}
           </h4>
         </div>
         <div class="py-3 bg-white rounded-[10px] px-6 flex flex-col gap-3">
           <p class="text-base font-semibold">To‘xtatilgan mehmon uylari</p>
           <h4 class="text-[24px] text-[#BB2649] font-bold">
             {{
-              `${dashboard?.nonActiveHotelsCount || 0}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+              `${dashboard?.nonActiveHotelsCount || 0}`.replace(
+                /\B(?=(\d{3})+(?!\d))/g,
+                " "
+              )
             }}
           </h4>
         </div>
@@ -28,15 +35,29 @@
       <div class="py-6 bg-white rounded-[10px] px-6 flex justify-between">
         <h4 class="text-[24px] font-semibold">Arizalar soni</h4>
         <h4 class="text-[24px] font-semibold">
-          {{ `${dashboard?.allApplicationsCount || 0}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
+          {{
+            `${dashboard?.allApplicationsCount || 0}`.replace(
+              /\B(?=(\d{3})+(?!\d))/g,
+              " "
+            )
+          }}
         </h4>
       </div>
-      <div class="grid grid-cols-4 gap-[10px]">
+      <div
+        class="grid grid-cols-4 gap-[10px]"
+        v-if="
+          $store.state.profileInfo?.role != 'region_admin' &&
+          $store.state.profileInfo?.role != 'region_subadmin'
+        "
+      >
         <div class="py-3 bg-white rounded-[10px] px-6 flex flex-col gap-3">
           <p class="text-base font-semibold text-[#3C4BDC]">Yangi</p>
           <h5 class="text-[24px] font-bold py-1">
             {{
-              `${dashboard?.newApplicationsCount || 0}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+              `${dashboard?.newApplicationsCount || 0}`.replace(
+                /\B(?=(\d{3})+(?!\d))/g,
+                " "
+              )
             }}
           </h5>
           <ul class="flex flex-col gap-3">
@@ -118,7 +139,13 @@
           </ul>
         </div>
       </div>
-      <div class="grid grid-cols-2 h-full">
+      <div
+        class="grid grid-cols-2 h-full"
+        v-if="
+          $store.state.profileInfo?.role != 'region_admin' &&
+          $store.state.profileInfo?.role != 'region_subadmin'
+        "
+      >
         <div class="py-[50px] h-full bg-white rounded-[10px] px-10">
           <apexchart
             v-if="chartOptionsHorizontal.xaxis.categories.length > 0"
