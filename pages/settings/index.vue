@@ -224,9 +224,13 @@
                 <a-form-model-item
                   prop="role"
                   class="form-item w-full mb-0"
-                  label="Admin turi"
+                  label="Foydalanuvchi turi"
                 >
-                  <a-select v-model="form.role" placeholder="Admin turi" class="w-full">
+                  <a-select
+                    v-model="form.role"
+                    placeholder="Foydalanuvchi turini tanlang"
+                    class="w-full"
+                  >
                     <a-select-option
                       :value="admin?.value"
                       v-for="admin in adminTypes"
@@ -253,11 +257,11 @@
                 <a-form-model-item
                   prop="region_id"
                   class="form-item w-full mb-0"
-                  label="Viloyat"
+                  label="Hudud"
                 >
                   <a-select
                     v-model="form.region_id"
-                    placeholder="Viloyot nomi"
+                    placeholder="Hududni tanlang"
                     class="w-full"
                   >
                     <a-select-option
@@ -319,7 +323,7 @@ export default {
           value: "admin",
         },
         {
-          label: "Bo'lim ma'muri",
+          label: "Boshqarma rahbariyati",
           value: "region_admin",
         },
         {
@@ -327,7 +331,7 @@ export default {
           value: "committee",
         },
         {
-          label: "Bo'lim hodimi",
+          label: "Boshqarma hodimi",
           value: "region_subadmin",
         },
       ],
@@ -502,7 +506,7 @@ export default {
       if (!this.form.region_id) {
         delete data.region_id;
       }
- 
+
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           if (this.form.password != this.form.password_confirmation) {
