@@ -71,7 +71,7 @@
               </h5>
             </div>
             <div
-              class="grid grid-cols-3 py-6 border-[0] border-t border-solid border-[#EBEBEB]"
+              class="grid grid-cols-2 py-6 border-[0] border-t border-solid border-[#EBEBEB]"
             >
               <div class="flex flex-col gap-2 items-center justify-between">
                 <h6 class="text-[#002856] text-start text-[32px] font-tt font-semibold">
@@ -81,15 +81,17 @@
                   Xostellar soni
                 </p>
               </div>
-              <div class="flex flex-col gap-2 items-center justify-between relative">
+              <!-- <div class="flex flex-col gap-2 items-center justify-between relative">
                 <span class="h-[52px] w-[1px] absolute bg-[#EBEBEB] left-0"> </span>
                 <span class="h-[52px] w-[1px] absolute bg-[#EBEBEB] right-0"> </span>
                 <h6 class="text-[#002856] text-[32px] font-tt font-semibold">24 532</h6>
                 <p class="font-tt font-medium text-base text-[#5D5D5F] text-center">
                   O'rinlar soni
                 </p>
-              </div>
-              <div class="flex flex-col gap-2 items-center justify-between">
+              </div> -->
+              <div class="flex flex-col gap-2 items-center justify-between relative">
+                <span class="h-[52px] w-[1px] absolute bg-[#EBEBEB] left-0"> </span>
+
                 <h6 class="text-[#002856] text-[32px] font-tt font-semibold">
                   {{ hotelsInActiveCount }}
                 </h6>
@@ -391,7 +393,7 @@ export default {
           }
         );
         this.dashboard?.hotels.unshift(allRegions);
-        console.log(this.dashboard?.hotels);
+      
         // this.seriesOrderClient[0].data = data?.data?.hotels.map((item) => item?.count);
       } catch (e) {}
     },
