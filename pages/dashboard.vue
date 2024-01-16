@@ -2,23 +2,21 @@
   <div class="max-w-[1536px] mx-auto py-10">
     <div class="body flex flex-col gap-4">
       <div class="flex flex-col gap-[10px]">
-        <ul class="grid grid-cols-3 gap-4">
+        <ul class="grid grid-cols-1 gap-4">
           <!-- <li v-for="tabItem in tabList" :key="tabItem.value">
-            <button
-              :class="{ active: activeTab == tabItem.value }"
-              @click="activeTab = tabItem.value"
-              class="text-[var(--blue-bold)] h-12 flex justify-center items-center verdana-700 rounded-lg border border-solid border-[var(--blue-bold)] w-full"
-            >
-              {{ tabItem.label }}
-            </button>
-          </li> -->
-          <li v-for="tabItem in tabList" :key="tabItem.value">
             <button
               :class="{ active: activeTab == tabItem.value }"
               @click="activeTab = tabItem.value"
               class="text-[#5D5D5F] py-[22px] text-[20px] bg-white font-tt font-medium flex justify-center items-center verdana-700 rounded-[16px] w-full"
             >
               {{ tabItem.label }}
+            </button>
+          </li> -->
+          <li>
+            <button
+              class="text-[#5D5D5F] active py-[22px] text-[20px] bg-white font-tt font-medium flex justify-center items-center verdana-700 rounded-[16px] w-full"
+            >
+              Oilaviy Mehmon Uylari Yagona Reyestri
             </button>
           </li>
         </ul>
@@ -40,7 +38,7 @@
               @click="mapClick(region?.region?.id)"
               class="text-[#5D5D5F] pb-5 flex justify-between font-medium font-tt text-base items-start border-[0] border-b border-solid border-[#F3F4F8] w-full"
             >
-              {{ region?.region?.name?.ru }}
+              {{ region?.region?.name?.uz }}
               <svg
                 v-if="activeRegion == region?.region?.id"
                 width="24"
@@ -63,7 +61,7 @@
         <div
           class="map-block border-[0] border-l border-solid border-[#EBEBEB] flex flex-col justify-between"
         >
-          <div class="pl-[100px] pt-12">
+          <div class="2xl:px-[100px] pt-12 px-12">
             <Map @mapHandle="mapClick" :currentRegion="activeRegion" />
           </div>
           <div class="map-infos flex flex-col mt-10 gap-6">
@@ -152,7 +150,7 @@
       <div class="flex gap-[10px] flex-col mt-4">
         <div class="table-container px-6 py-6 rounded-[24px] bg-white">
           <h1 class="text-[#000] text-[24px] font-tt font-semibold flex gap-4 mb-6">
-            Arizalar soni <span class="text-[#0808FF]">1 020</span>
+            Arizalar soni <span class="text-[#0808FF]">{{ AplicationstotalCount }}</span>
           </h1>
           <div class="flex flex-col gap-2">
             <div class="table-head">
@@ -338,6 +336,23 @@ export default {
       return this.dashboard.hotels?.find((item) => item?.region.id == this.activeRegion)
         ?.inactive_count;
     },
+    AplicationstotalCount() {
+      if (this.dashboard?.applications?.length > 0) {
+        return this.dashboard?.applications?.reduce((sum, item) => {
+          return (
+            sum +
+            (item?.accepted +
+              item?.danger +
+              item?.in_process +
+              item?.new +
+              item?.rejected +
+              item?.warning)
+          );
+        }, 0);
+      } else {
+        return 0;
+      }
+    },
   },
   mounted() {
     this.__GET_DASHBOARD();
@@ -350,13 +365,33 @@ export default {
     async __GET_DASHBOARD() {
       try {
         const data = await this.$store.dispatch("fetchDashboard/getDashboard");
-        console.log(data);
-        // this.chartOptionsHorizontal.xaxis.categories = data?.data?.hotels.map(
-        //   (item) => item?.region_name
-        // );
-
         this.dashboard = data?.data;
         this.activeRegion = this.dashboard?.hotels[0]?.region?.id;
+        const allRegions = this.dashboard?.hotels?.reduce(
+          (sum, item) => {
+            return {
+              inactive_count: sum.inactive_count + item.inactive_count,
+              count: sum.count + item.count,
+              region: {
+                id: 8888,
+                name: {
+                  uz: "Республика",
+                },
+              },
+            };
+          },
+          {
+            inactive_count: 0,
+            count: 0,
+            region: {
+              name: {
+                uz: "",
+              },
+            },
+          }
+        );
+        this.dashboard?.hotels.unshift(allRegions);
+        console.log(this.dashboard?.hotels);
         // this.seriesOrderClient[0].data = data?.data?.hotels.map((item) => item?.count);
       } catch (e) {}
     },

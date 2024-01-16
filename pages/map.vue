@@ -1,6 +1,6 @@
 <template lang="html">
   <svg
-    class="map_select"
+    class="map_select w-full"
     xmlns="http://www.w3.org/2000/svg"
     width="1050"
     height="707"
