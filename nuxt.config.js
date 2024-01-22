@@ -29,6 +29,7 @@ export default {
     },
     baseURL: process.env.BASE_URL,
   },
+  // "base url"
   components: true,
 
   buildModules: ["@nuxtjs/tailwindcss"],
