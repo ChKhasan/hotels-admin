@@ -55,7 +55,7 @@
         "
       >
         <span slot="certificate" slot-scope="text">
-          <a v-if="text" :href="text.link" class="flex justify-end"
+          <a v-if="text" :href="text.link" @click="preventOne" class="flex justify-end"
             ><svg
               data-v-3ff0ae0c=""
               xmlns="http://www.w3.org/2000/svg"
@@ -122,6 +122,7 @@ export default {
   },
   data() {
     return {
+      isLinkClicked: false,
       loading: false,
       hotels: [],
       search: "",
@@ -205,7 +206,15 @@ export default {
       this.changeSearch(e, "/", "__GET_HOTELS");
     },
     clickRow(obj) {
-      this.$router.push(`/applications/${obj?.id}`);
+      if (!this.isLinkClicked) {
+        this.$router.push(`/applications/${obj?.id}`);
+      } else {
+        this.isLinkClicked = false;
+      }
+    },
+    moment,
+    preventOne() {
+      this.isLinkClicked = true;
     },
     indexPage(current_page, per_page) {
       return (current_page * 1 - 1) * per_page + 1;
