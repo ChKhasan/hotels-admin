@@ -32,6 +32,7 @@
         Orqaga
       </button>
       <button
+        v-if="$store.state.profileInfo.role == 'region_subadmin'"
         @click="$router.push(`/hotel/edit/${info?.id}`)"
         class="uppercase flex gap-[10px] px-6 h-[50px] border border-solid border-blue-bold bg-blue-bold rounded-[8px] justify-center items-center text-white font-[verdana-400] text-base"
       >
@@ -129,7 +130,11 @@
           <h5 class="text-[24px] text-white font-bold">{{ info?.tin }}</h5>
         </div>
         <div class="justify-between flex flex-col relative">
-          <button @click="visible = true" class="absolute right-0 bottom-4">
+          <button
+            @click="visible = true"
+            class="absolute right-0 bottom-4"
+            v-if="$store.state.profileInfo.role == 'region_subadmin'"
+          >
             <svg
               width="24"
               height="24"
