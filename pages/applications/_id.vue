@@ -518,7 +518,11 @@
               </a>
               <a
                 v-if="files?.fire_safety"
-                :href="`https://api.hotels.ndc.uz/storage/${files?.fire_safety}`"
+                :href="`https://api.hotels.ndc.uz/${
+                  files?.fire_safety.includes('storage')
+                    ? files?.fire_safety
+                    : `storage/${files?.fire_safety}`
+                }`"
               >
                 <div
                   class="border-[2px] border-solid rounded-[6px] border-[#5A5A5A] px-6 py-6"
@@ -645,7 +649,11 @@
             <div class="grid grid-cols-1 gap-6">
               <a
                 v-if="files?.certificate"
-                :href="`https://api.hotels.ndc.uz/storage/${files?.certificate}`"
+                :href="`https://api.hotels.ndc.uz/${
+                  files?.certificate.includes('storage')
+                    ? files?.certificate
+                    : `storage/${files?.certificate}`
+                }`"
               >
                 <div
                   class="border-[2px] border-solid rounded-[6px] border-[#5A5A5A] px-6 py-6"
