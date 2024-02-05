@@ -1047,10 +1047,10 @@ export default {
   data() {
     return {
       mapSettings: {
-        zoom: 1, // Initial zoom level
-        maxZoom: 4, // Set the maximum zoom level
-        minZoom: 4, // Set the maximum zoom level
-        // Other map settings...
+        zoom: 1, 
+        maxZoom: 4, 
+        minZoom: 4, 
+       
       },
       visible: false,
       visibleAccept: false,

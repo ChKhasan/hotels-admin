@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <Loader v-if="loading"/>
+      <Loader v-if="loading" />
     </div>
   </div>
 </template>
@@ -83,10 +83,17 @@ export default {
         this.$router.push("/");
       } catch (e) {
         this.loading = false;
-        this.$notification["error"]({
-          message: "Error",
-          description: e.response.statusText,
-        });
+        if (e?.response?.status == 404) {
+          this.$notification["error"]({
+            message: "Error",
+            description: "Foydalanuvchi topilamdi.",
+          });
+        } else {
+          this.$notification["error"]({
+            message: "Error",
+            description: e.response.statusText,
+          });
+        }
       } finally {
       }
     },
