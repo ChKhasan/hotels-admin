@@ -86,7 +86,7 @@ export default {
         if (e?.response?.status == 404) {
           this.$notification["error"]({
             message: "Error",
-            description: "Foydalanuvchi topilamdi.",
+            description: "Foydalanuvchi topilmadi.",
           });
         } else {
           this.$notification["error"]({
