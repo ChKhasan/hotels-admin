@@ -137,7 +137,12 @@
             <div class="grid grid-cols-2 gap-6">
               <a
                 v-if="files?.state_certificate"
-                :href="`https://api.hotels.ndc.uz/storage/${files?.state_certificate}`"
+                :href="`https://api.hotels.ndc.uz/${
+                      files?.state_certificate.includes('storage')
+                        ? files?.state_certificate
+                        : `storage/${files?.state_certificate}`
+                    }`"
+                
               >
                 <div
                   class="border-[2px] border-solid rounded-[6px] border-[#5A5A5A] px-6 py-6"
@@ -169,7 +174,11 @@
                     </svg>
                   </p>
                   <span
-                    :href="`https://api.hotels.ndc.uz/storage/${files?.cadastre}`"
+                    :href="`https://api.hotels.ndc.uz/${
+                      files?.cadastre.includes('storage')
+                        ? files?.cadastre
+                        : `storage/${files?.cadastre}`
+                    }`"
                     class="text-base text-[#0D152C] flex justify-center gap-10 items-center mt-[50px]"
                   >
                     Davlat komissiyasining foydalanishga qabul qilish to‘g‘risida
@@ -265,7 +274,11 @@
               </a>
               <a
                 v-if="files?.cadastre"
-                :href="`https://api.hotels.ndc.uz/storage/${files?.cadastre}`"
+                :href="`https://api.hotels.ndc.uz/${
+                  files?.cadastre.includes('storage')
+                    ? files?.cadastre
+                    : `storage/${files?.cadastre}`
+                }`"
               >
                 <div
                   class="border-[2px] border-solid rounded-[6px] border-[#5A5A5A] px-6 py-6"
@@ -392,7 +405,11 @@
             <div class="grid grid-cols-2 gap-6">
               <a
                 v-if="files?.sanitation"
-                :href="`https://api.hotels.ndc.uz/storage/${files?.sanitation}`"
+                :href="`https://api.hotels.ndc.uz/${
+                  files?.sanitation.includes('storage')
+                    ? files?.sanitation
+                    : `storage/${files?.sanitation}`
+                }`"
               >
                 <div
                   class="border-[2px] border-solid rounded-[6px] border-[#5A5A5A] px-6 py-6"
@@ -1047,10 +1064,9 @@ export default {
   data() {
     return {
       mapSettings: {
-        zoom: 1, 
-        maxZoom: 4, 
-        minZoom: 4, 
-       
+        zoom: 1,
+        maxZoom: 4,
+        minZoom: 4,
       },
       visible: false,
       visibleAccept: false,
