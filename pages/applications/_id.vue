@@ -61,8 +61,18 @@
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
             <p class="text-white font-[verdana-400] text-base">Oilaviy mehmon uyi nomi</p>
-            <h5 class="text-[24px] text-white font-bold">{{ info?.name }}</h5>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ info?.name || emptyText }}
+            </h5>
           </div>
+          <!-- <div
+            class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
+          >
+            <p class="text-white font-[verdana-400] text-base">Mehmonxona turi</p>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ info?.name || emptyText }}
+            </h5>
+          </div> -->
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
@@ -70,7 +80,7 @@
               Oilaviy mehmon uyi joylashgan hudud
             </p>
             <h5 class="text-[24px] text-white font-bold">
-              {{ info?.region?.name?.uz || "----" }}
+              {{ placeInfo || emptyText }}
             </h5>
           </div>
           <div
@@ -80,23 +90,59 @@
               Oilaviy mehmon uyi manzili
             </p>
             <h5 class="text-[24px] text-white font-bold">
-              {{ info?.address_from_application }}
+              {{ info?.address_from_application || emptyText }}
             </h5>
           </div>
-        </div>
-        <div class="grid grid-cols-3 gap-6">
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
             <p class="text-white font-[verdana-400] text-base">Tashkilot yuridik nomi</p>
-            <h5 class="text-[24px] text-white font-bold">{{ info?.legal_name }}</h5>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ info?.legal_name || emptyText }}
+            </h5>
           </div>
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
             <p class="text-white font-[verdana-400] text-base">STIR raqami</p>
-            <h5 class="text-[24px] text-white font-bold">{{ info?.tin }}</h5>
+            <h5 class="text-[24px] text-white font-bold">{{ info?.tin || emptyText }}</h5>
           </div>
+          <div
+            class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
+          >
+            <p class="text-white font-[verdana-400] text-base">
+              Oilaviy mehmon uyi telefon raqamlari
+            </p>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ info?.phone_number || emptyText }}
+            </h5>
+          </div>
+          <div
+            class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
+          >
+            <p class="text-white font-[verdana-400] text-base">Elektron manzili</p>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ info?.email || emptyText }}
+            </h5>
+          </div>
+          <div
+            class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
+          >
+            <p class="text-white font-[verdana-400] text-base">Veb sayti</p>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ info?.website || emptyText }}
+            </h5>
+          </div>
+        </div>
+      
+        <div
+          class="title w-full flex justify-center bg-blue-grey py-[10px] rounded-[10px]"
+        >
+          <h1 class="font-[verdana-700] text-[24px] text-white">
+            Oilaviy mehmon uyi rahbari ma'lumotlari
+          </h1>
+        </div>
+        <div class="grid grid-cols-3 gap-6">
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
@@ -104,30 +150,58 @@
               Oilaviy mehmon uyi rahbari
             </p>
             <h5 class="text-[24px] text-white font-bold">
-              {{ info?.director_full_name }}
+              {{ user?.full_name || emptyText }}
             </h5>
           </div>
-        </div>
-        <div class="grid grid-cols-3 gap-6">
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
             <p class="text-white font-[verdana-400] text-base">
-              Oilaviy mehmon uyi telefon raqamlari
+              Pasport seriyasi va raqami
             </p>
-            <h5 class="text-[24px] text-white font-bold">{{ info?.phone_number }}</h5>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ user?.pport_no || emptyText }}
+            </h5>
           </div>
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
-            <p class="text-white font-[verdana-400] text-base">Elektron manzili</p>
-            <h5 class="text-[24px] text-white font-bold">{{ info?.email }}</h5>
+            <p class="text-white font-[verdana-400] text-base">Kim tomondan berilgan</p>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ user?.pport_issue_place || emptyText }}
+            </h5>
           </div>
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
-            <p class="text-white font-[verdana-400] text-base">Veb sayti</p>
-            <h5 class="text-[24px] text-white font-bold">{{ info?.website }}</h5>
+            <p class="text-white font-[verdana-400] text-base">JShShIR</p>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ user?.pin || emptyText }}
+            </h5>
+          </div>
+          <div
+            class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
+          >
+            <p class="text-white font-[verdana-400] text-base">Elektron pochta manzili</p>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ user?.email || emptyText }}
+            </h5>
+          </div>
+          <div
+            class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
+          >
+            <p class="text-white font-[verdana-400] text-base">Manzili</p>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ user?.per_adr || emptyText }}
+            </h5>
+          </div>
+          <div
+            class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
+          >
+            <p class="text-white font-[verdana-400] text-base">Telefon raqami</p>
+            <h5 class="text-[24px] text-white font-bold">
+              +{{ user?.mob_phone_no || emptyText }}
+            </h5>
           </div>
         </div>
 
@@ -138,11 +212,10 @@
               <a
                 v-if="files?.state_certificate"
                 :href="`https://api.hotels.ndc.uz/${
-                      files?.state_certificate.includes('storage')
-                        ? files?.state_certificate
-                        : `storage/${files?.state_certificate}`
-                    }`"
-                
+                  files?.state_certificate.includes('storage')
+                    ? files?.state_certificate
+                    : `storage/${files?.state_certificate}`
+                }`"
               >
                 <div
                   class="border-[2px] border-solid rounded-[6px] border-[#5A5A5A] px-6 py-6"
@@ -1063,6 +1136,7 @@
 export default {
   data() {
     return {
+      emptyText: "----",
       mapSettings: {
         zoom: 1,
         maxZoom: 4,
@@ -1107,7 +1181,14 @@ export default {
         additional_services: [],
         reject_reasons: [],
       },
+      user: {},
     };
+  },
+  computed: {
+    placeInfo() {
+      let currentRegion = this.regions.find((item) => item.id == this.form.region_id);
+      return currentRegion?.name?.uz;
+    },
   },
   mounted() {
     this.__GET_APPLICATIONS(this.$route.params.id);
@@ -1212,9 +1293,10 @@ export default {
         this.form.lon = data?.data?.hotel?.lon;
         this.form.status = data?.data?.status;
         // this.form.name = data?.data?.hotel?.name;
-        this.form.region_id = data?.data?.hotel?.region?.id;
+        this.form.region_id = data?.data?.hotel?.region_id;
         this.files = data?.data;
         this.info = data?.data?.hotel;
+        this.user = data?.data?.user;
         this.title = { ...data?.data?.hotel?.name };
       } catch (e) {}
     },
@@ -1315,5 +1397,20 @@ export default {
   background-color: transparent;
   border-radius: 6px;
   border: 2px solid #5a5a5a;
+}
+:deep(.el-carousel__item) h3 {
+  color: #475669;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+  text-align: center;
+}
+
+:deep(.el-carousel__item:nth-child(2n)) {
+  background-color: #99a9bf;
+}
+
+:deep(.el-carousel__item:nth-child(2n + 1)) {
+  background-color: #d3dce6;
 }
 </style>
