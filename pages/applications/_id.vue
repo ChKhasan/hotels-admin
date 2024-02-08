@@ -1398,19 +1398,5 @@ export default {
   border-radius: 6px;
   border: 2px solid #5a5a5a;
 }
-:deep(.el-carousel__item) h3 {
-  color: #475669;
-  opacity: 0.75;
-  line-height: 200px;
-  margin: 0;
-  text-align: center;
-}
 
-:deep(.el-carousel__item:nth-child(2n)) {
-  background-color: #99a9bf;
-}
-
-:deep(.el-carousel__item:nth-child(2n + 1)) {
-  background-color: #d3dce6;
-}
 </style>
