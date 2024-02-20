@@ -4,7 +4,6 @@ import {
   Table,
   Cascader,
   Upload,
-  Checkbox,
   Switch,
   Modal,
   Popconfirm,
@@ -23,6 +22,7 @@ import {
   FormModel,
   Popover,
   Alert,
+  Checkbox,
   Badge,
   notification,
 } from "ant-design-vue";

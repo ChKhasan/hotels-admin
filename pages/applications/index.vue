@@ -84,20 +84,20 @@
         <span slot="status" slot-scope="text">
           <span
             :class="{
-              'status-new': text == 'new',
-              'status-inactive': text == 'rejected',
-              'status-progress': text == 'in_process',
-              'status-success': text == 'accepted',
+              'status-new': text.status == 'new',
+              'status-inactive': text.status == 'rejected',
+              'status-progress': text.status == 'in_process',
+              'status-success': text.status == 'accepted',
             }"
           >
-            {{ statusTypes[text] }}
+            {{ text?.user_canceled ? 'MIJOZ TOMONDAN RAD ETILGAN':statusTypes[text.status] }}
           </span>
         </span>
         <span slot="name" slot-scope="text">
           {{ text?.name > 0 ? text?.name : "----" }}
         </span>
         <span slot="end_date" slot-scope="text">
-          {{ text ? text : "----" }}
+          {{ text ? text : "----" }} 
         </span>
         <span slot="begin_date" slot-scope="text">
           {{ text ? moment(text).format("DD.MM.YYYY - HH:mm") : "----" }}
@@ -188,13 +188,11 @@ export default {
         },
         {
           title: "Ariza holati",
-          dataIndex: "status",
-          key: "status",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "status" },
           className: "column-status",
         },
-      
+
         {
           title: "Sertifikat",
           dataIndex: "certificate",
