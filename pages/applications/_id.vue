@@ -1,39 +1,39 @@
 <template lang="html">
   <div class="create-hotel max-w-[1536px] mx-auto py-[60px]">
-    <a-form-model :model="form" ref="ruleForm" :rules="rules">
+    <a-form-model ref="ruleForm" :model="form" :rules="rules">
       <div class="flex justify-start items-center">
         <button
-          @click="$router.push('/applications')"
           class="flex gap-[10px] w-[236px] h-11 border border-solid border-blue-bold bg-blue-bold rounded-[8px] justify-center items-center text-white font-[verdana-400] text-base"
+          @click="$router.push('/applications')"
         >
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
+            fill="none"
             height="24"
             viewBox="0 0 24 24"
-            fill="none"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
               d="M9.57 5.93018L3.5 12.0002L9.57 18.0702"
               stroke="white"
-              stroke-width="1.5"
-              stroke-miterlimit="10"
               stroke-linecap="round"
               stroke-linejoin="round"
+              stroke-miterlimit="10"
+              stroke-width="1.5"
             />
             <path
               d="M20.4999 12H3.66992"
               stroke="white"
-              stroke-width="1.5"
-              stroke-miterlimit="10"
               stroke-linecap="round"
               stroke-linejoin="round"
+              stroke-miterlimit="10"
+              stroke-width="1.5"
             />
           </svg>
           Orqaga
         </button>
       </div>
-      <div class="mt-10" v-if="files.user_canceled">
+      <div v-if="files.user_canceled" class="mt-10">
         <div
           class="title w-full flex justify-center bg-blue-grey py-[10px] rounded-[10px]"
         >
@@ -44,11 +44,11 @@
       </div>
 
       <div
-        class="mt-10"
         v-if="
           (files?.reject_reasons?.length > 0 || files?.reject_text) &&
           !files.user_canceled
         "
+        class="mt-10"
       >
         <div
           class="title w-full flex justify-center bg-blue-grey py-[10px] rounded-[10px]"
@@ -60,9 +60,9 @@
             {{ files?.reject_text }}
           </li>
           <li
+            v-for="(reason, index) in files?.reject_reasons"
             v-if="files?.reject_reasons?.length > 0"
             class="text-[red] font-[verdana-400] text-base"
-            v-for="(reason, index) in files?.reject_reasons"
           >
             {{ index + 1 }}. {{ reason?.name?.uz }}
           </li>
@@ -124,7 +124,7 @@
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
-            <p class="text-white font-[verdana-400] text-base">STIR raqami</p>
+            <p class="text-white font-[verdana-400] text-base"> Oilaviy mehmon uyi STIR raqami</p>
             <h5 class="text-[24px] text-white font-bold">{{ info?.tin || emptyText }}</h5>
           </div>
           <div
@@ -140,7 +140,15 @@
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
-            <p class="text-white font-[verdana-400] text-base">Elektron manzili</p>
+            <p class="text-white font-[verdana-400] text-base">Oilaviy mehmon uyi telefon raqami ( qo'shimcha )</p>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ info?.phone_number2 || emptyText }}
+            </h5>
+          </div>
+          <div
+            class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
+          >
+            <p class="text-white font-[verdana-400] text-base">Oilaviy mehmon uyi elektron manzili</p>
             <h5 class="text-[24px] text-white font-bold">
               {{ info?.email || emptyText }}
             </h5>
@@ -148,11 +156,13 @@
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
-            <p class="text-white font-[verdana-400] text-base">Veb sayti</p>
+            <p class="text-white font-[verdana-400] text-base">Oilaviy mehmon uyi veb sayti</p>
             <h5 class="text-[24px] text-white font-bold">
               {{ info?.website || emptyText }}
             </h5>
           </div>
+
+
         </div>
 
         <div
@@ -186,7 +196,7 @@
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
-            <p class="text-white font-[verdana-400] text-base">Kim tomondan berilgan</p>
+            <p class="text-white font-[verdana-400] text-base">Pasport kim tomondan berilgan</p>
             <h5 class="text-[24px] text-white font-bold">
               {{ user?.pport_issue_place || emptyText }}
             </h5>
@@ -223,6 +233,16 @@
               +{{ user?.mob_phone_no || emptyText }}
             </h5>
           </div>
+          <div
+            class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
+          >
+            <p class="text-white font-[verdana-400] text-base">
+              Oilaviy mehmon uyi rahbari STIR raqami
+            </p>
+            <h5 class="text-[24px] text-white font-bold">
+              {{ user?.tin || emptyText }}
+            </h5>
+          </div>
         </div>
 
         <div class="">
@@ -242,10 +262,10 @@
                 >
                   <p class="ant-upload-drag-icon flex justify-center">
                     <svg
-                      width="58"
+                      fill="none"
                       height="59"
                       viewBox="0 0 58 59"
-                      fill="none"
+                      width="58"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
@@ -266,7 +286,7 @@
                       />
                     </svg>
                   </p>
-                  <span
+                  <a
                     :href="`https://api.hotels.ndc.uz/${
                       files?.cadastre.includes('storage')
                         ? files?.cadastre
@@ -277,88 +297,88 @@
                     Davlat komissiyasining foydalanishga qabul qilish to‘g‘risida
                     dalolatnomasi
                     <svg
-                      width="38"
+                      fill="none"
                       height="39"
                       viewBox="0 0 38 39"
-                      fill="none"
+                      width="38"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
                         d="M26.0291 14.5918C31.7291 15.0826 34.0566 18.0118 34.0566 24.4243V24.6301C34.0566 31.7076 31.2225 34.5418 24.145 34.5418H13.8374C6.75995 34.5418 3.92578 31.7076 3.92578 24.6301V24.4243C3.92578 18.0593 6.22161 15.1301 11.8266 14.6076"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                       <path
                         d="M19 3.66699V24.0603"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                       <path
                         d="M24.3036 20.5293L18.9995 25.8335L13.6953 20.5293"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                     </svg>
-                  </span>
+                  </a>
                   <div class="buttons flex gap-6 justify-center mt-[60px]">
                     <button>
                       <svg
-                        width="39"
+                        fill="none"
                         height="39"
                         viewBox="0 0 39 39"
-                        fill="none"
+                        width="39"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           d="M19.4993 35.3337C28.2077 35.3337 35.3327 28.2087 35.3327 19.5003C35.3327 10.792 28.2077 3.66699 19.4993 3.66699C10.791 3.66699 3.66602 10.792 3.66602 19.5003C3.66602 28.2087 10.791 35.3337 19.4993 35.3337Z"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M15.0195 23.9812L23.9812 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M23.9812 23.9812L15.0195 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                       </svg>
                     </button>
                     <button>
                       <svg
-                        width="39"
+                        fill="none"
                         height="39"
                         viewBox="0 0 39 39"
-                        fill="none"
+                        width="39"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           d="M19.4993 35.3337C28.2077 35.3337 35.3327 28.2087 35.3327 19.5003C35.3327 10.792 28.2077 3.66699 19.4993 3.66699C10.791 3.66699 3.66602 10.792 3.66602 19.5003C3.66602 28.2087 10.791 35.3337 19.4993 35.3337Z"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M12.7715 19.5004L17.2523 23.9812L26.2298 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                       </svg>
                     </button>
@@ -378,10 +398,10 @@
                 >
                   <p class="ant-upload-drag-icon flex justify-center">
                     <svg
-                      width="58"
+                      fill="none"
                       height="59"
                       viewBox="0 0 58 59"
-                      fill="none"
+                      width="58"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
@@ -406,88 +426,88 @@
                     class="text-base text-[#0D152C] flex justify-center gap-10 items-center mt-[50px]"
                   >
                     Kadastr ko‘chirmasi yoki ijara shartnomasi nusxasi<svg
-                      width="38"
-                      height="39"
-                      viewBox="0 0 38 39"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
+                    fill="none"
+                    height="39"
+                    viewBox="0 0 38 39"
+                    width="38"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                       <path
                         d="M26.0291 14.5918C31.7291 15.0826 34.0566 18.0118 34.0566 24.4243V24.6301C34.0566 31.7076 31.2225 34.5418 24.145 34.5418H13.8374C6.75995 34.5418 3.92578 31.7076 3.92578 24.6301V24.4243C3.92578 18.0593 6.22161 15.1301 11.8266 14.6076"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                       <path
                         d="M19 3.66699V24.0603"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                       <path
                         d="M24.3036 20.5293L18.9995 25.8335L13.6953 20.5293"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                     </svg>
                   </span>
                   <div class="buttons flex gap-6 justify-center mt-[60px]">
                     <button>
                       <svg
-                        width="39"
+                        fill="none"
                         height="39"
                         viewBox="0 0 39 39"
-                        fill="none"
+                        width="39"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           d="M19.4993 35.3337C28.2077 35.3337 35.3327 28.2087 35.3327 19.5003C35.3327 10.792 28.2077 3.66699 19.4993 3.66699C10.791 3.66699 3.66602 10.792 3.66602 19.5003C3.66602 28.2087 10.791 35.3337 19.4993 35.3337Z"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M15.0195 23.9812L23.9812 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M23.9812 23.9812L15.0195 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                       </svg>
                     </button>
                     <button>
                       <svg
-                        width="39"
+                        fill="none"
                         height="39"
                         viewBox="0 0 39 39"
-                        fill="none"
+                        width="39"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           d="M19.4993 35.3337C28.2077 35.3337 35.3327 28.2087 35.3327 19.5003C35.3327 10.792 28.2077 3.66699 19.4993 3.66699C10.791 3.66699 3.66602 10.792 3.66602 19.5003C3.66602 28.2087 10.791 35.3337 19.4993 35.3337Z"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M12.7715 19.5004L17.2523 23.9812L26.2298 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                       </svg>
                     </button>
@@ -509,10 +529,10 @@
                 >
                   <p class="ant-upload-drag-icon flex justify-center">
                     <svg
-                      width="58"
+                      fill="none"
                       height="59"
                       viewBox="0 0 58 59"
-                      fill="none"
+                      width="58"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
@@ -538,88 +558,88 @@
                   >
                     Sanitariya-gigiyena talablari bo‘yicha xulosa
                     <svg
-                      width="38"
+                      fill="none"
                       height="39"
                       viewBox="0 0 38 39"
-                      fill="none"
+                      width="38"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
                         d="M26.0291 14.5918C31.7291 15.0826 34.0566 18.0118 34.0566 24.4243V24.6301C34.0566 31.7076 31.2225 34.5418 24.145 34.5418H13.8374C6.75995 34.5418 3.92578 31.7076 3.92578 24.6301V24.4243C3.92578 18.0593 6.22161 15.1301 11.8266 14.6076"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                       <path
                         d="M19 3.66699V24.0603"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                       <path
                         d="M24.3036 20.5293L18.9995 25.8335L13.6953 20.5293"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                     </svg>
                   </span>
                   <div class="buttons flex gap-6 justify-center mt-[60px]">
                     <button>
                       <svg
-                        width="39"
+                        fill="none"
                         height="39"
                         viewBox="0 0 39 39"
-                        fill="none"
+                        width="39"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           d="M19.4993 35.3337C28.2077 35.3337 35.3327 28.2087 35.3327 19.5003C35.3327 10.792 28.2077 3.66699 19.4993 3.66699C10.791 3.66699 3.66602 10.792 3.66602 19.5003C3.66602 28.2087 10.791 35.3337 19.4993 35.3337Z"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M15.0195 23.9812L23.9812 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M23.9812 23.9812L15.0195 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                       </svg>
                     </button>
                     <button>
                       <svg
-                        width="39"
+                        fill="none"
                         height="39"
                         viewBox="0 0 39 39"
-                        fill="none"
+                        width="39"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           d="M19.4993 35.3337C28.2077 35.3337 35.3327 28.2087 35.3327 19.5003C35.3327 10.792 28.2077 3.66699 19.4993 3.66699C10.791 3.66699 3.66602 10.792 3.66602 19.5003C3.66602 28.2087 10.791 35.3337 19.4993 35.3337Z"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M12.7715 19.5004L17.2523 23.9812L26.2298 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                       </svg>
                     </button>
@@ -639,10 +659,10 @@
                 >
                   <p class="ant-upload-drag-icon flex justify-center">
                     <svg
-                      width="58"
+                      fill="none"
                       height="59"
                       viewBox="0 0 58 59"
-                      fill="none"
+                      width="58"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
@@ -667,88 +687,88 @@
                     class="text-base text-[#0D152C] flex justify-center gap-10 items-center mt-[50px]"
                   >
                     Yong‘in xavfsizligi talablari bo‘yicha xulosa<svg
-                      width="38"
-                      height="39"
-                      viewBox="0 0 38 39"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
+                    fill="none"
+                    height="39"
+                    viewBox="0 0 38 39"
+                    width="38"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                       <path
                         d="M26.0291 14.5918C31.7291 15.0826 34.0566 18.0118 34.0566 24.4243V24.6301C34.0566 31.7076 31.2225 34.5418 24.145 34.5418H13.8374C6.75995 34.5418 3.92578 31.7076 3.92578 24.6301V24.4243C3.92578 18.0593 6.22161 15.1301 11.8266 14.6076"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                       <path
                         d="M19 3.66699V24.0603"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                       <path
                         d="M24.3036 20.5293L18.9995 25.8335L13.6953 20.5293"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                     </svg>
                   </span>
                   <div class="buttons flex gap-6 justify-center mt-[60px]">
                     <button>
                       <svg
-                        width="39"
+                        fill="none"
                         height="39"
                         viewBox="0 0 39 39"
-                        fill="none"
+                        width="39"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           d="M19.4993 35.3337C28.2077 35.3337 35.3327 28.2087 35.3327 19.5003C35.3327 10.792 28.2077 3.66699 19.4993 3.66699C10.791 3.66699 3.66602 10.792 3.66602 19.5003C3.66602 28.2087 10.791 35.3337 19.4993 35.3337Z"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M15.0195 23.9812L23.9812 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M23.9812 23.9812L15.0195 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                       </svg>
                     </button>
                     <button>
                       <svg
-                        width="39"
+                        fill="none"
                         height="39"
                         viewBox="0 0 39 39"
-                        fill="none"
+                        width="39"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           d="M19.4993 35.3337C28.2077 35.3337 35.3327 28.2087 35.3327 19.5003C35.3327 10.792 28.2077 3.66699 19.4993 3.66699C10.791 3.66699 3.66602 10.792 3.66602 19.5003C3.66602 28.2087 10.791 35.3337 19.4993 35.3337Z"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M12.7715 19.5004L17.2523 23.9812L26.2298 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                       </svg>
                     </button>
@@ -770,10 +790,10 @@
                 >
                   <p class="ant-upload-drag-icon flex justify-center">
                     <svg
-                      width="58"
+                      fill="none"
                       height="59"
                       viewBox="0 0 58 59"
-                      fill="none"
+                      width="58"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
@@ -799,88 +819,88 @@
                   >
                     Tashkilot guvohnomasi
                     <svg
-                      width="38"
+                      fill="none"
                       height="39"
                       viewBox="0 0 38 39"
-                      fill="none"
+                      width="38"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
                         d="M26.0291 14.5918C31.7291 15.0826 34.0566 18.0118 34.0566 24.4243V24.6301C34.0566 31.7076 31.2225 34.5418 24.145 34.5418H13.8374C6.75995 34.5418 3.92578 31.7076 3.92578 24.6301V24.4243C3.92578 18.0593 6.22161 15.1301 11.8266 14.6076"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                       <path
                         d="M19 3.66699V24.0603"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                       <path
                         d="M24.3036 20.5293L18.9995 25.8335L13.6953 20.5293"
                         stroke="#0D152C"
-                        stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="1.5"
                       />
                     </svg>
                   </span>
                   <div class="buttons flex gap-6 justify-center mt-[60px]">
                     <button>
                       <svg
-                        width="39"
+                        fill="none"
                         height="39"
                         viewBox="0 0 39 39"
-                        fill="none"
+                        width="39"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           d="M19.4993 35.3337C28.2077 35.3337 35.3327 28.2087 35.3327 19.5003C35.3327 10.792 28.2077 3.66699 19.4993 3.66699C10.791 3.66699 3.66602 10.792 3.66602 19.5003C3.66602 28.2087 10.791 35.3337 19.4993 35.3337Z"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M15.0195 23.9812L23.9812 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M23.9812 23.9812L15.0195 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                       </svg>
                     </button>
                     <button>
                       <svg
-                        width="39"
+                        fill="none"
                         height="39"
                         viewBox="0 0 39 39"
-                        fill="none"
+                        width="39"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           d="M19.4993 35.3337C28.2077 35.3337 35.3327 28.2087 35.3327 19.5003C35.3327 10.792 28.2077 3.66699 19.4993 3.66699C10.791 3.66699 3.66602 10.792 3.66602 19.5003C3.66602 28.2087 10.791 35.3337 19.4993 35.3337Z"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                         <path
                           d="M12.7715 19.5004L17.2523 23.9812L26.2298 15.0195"
                           stroke="#8E8F90"
-                          stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          stroke-width="1.5"
                         />
                       </svg>
                     </button>
@@ -890,29 +910,29 @@
             </div>
             <div class="grid grid-cols-1 w-full">
               <a-form-model-item
-                prop="address.uz"
                 class="form-item w-full mb-0"
                 label="Tashkilot manzili (O‘Z)"
+                prop="address.uz"
               >
-                <a-input v-model="form.address.uz" placeholder="Tashkilot manzili..." />
+                <a-input v-model="form.address.uz" placeholder="Tashkilot manzili..."/>
               </a-form-model-item>
             </div>
             <div class="grid grid-cols-1 w-full">
               <a-form-model-item
-                prop="address.ru"
                 class="form-item w-full mb-0"
                 label="Tashkilot manzili (RU)"
+                prop="address.ru"
               >
-                <a-input v-model="form.address.ru" placeholder="Tashkilot manzili..." />
+                <a-input v-model="form.address.ru" placeholder="Tashkilot manzili..."/>
               </a-form-model-item>
             </div>
             <div class="grid grid-cols-1 w-full">
               <a-form-model-item
-                prop="address.en"
                 class="form-item w-full mb-0"
                 label="Tashkilot manzili (EN)"
+                prop="address.en"
               >
-                <a-input v-model="form.address.en" placeholder="Tashkilot manzili..." />
+                <a-input v-model="form.address.en" placeholder="Tashkilot manzili..."/>
               </a-form-model-item>
             </div>
             <div class="grid grid-cols-1 gap-6">
@@ -924,68 +944,70 @@
                 <a-input v-model="form.name" placeholder="Lokomotiv hostel" />
               </a-form-model-item> -->
               <a-form-model-item
-                prop="region_id"
                 class="form-item w-full mb-0"
                 label="Xostel joylashgan hudud"
+                prop="region_id"
               >
                 <a-select
                   v-model="form.region_id"
-                  placeholder="Toshkent shahri"
                   class="w-full"
+                  placeholder="Toshkent shahri"
                 >
                   <a-select-option
-                    :value="region?.id"
                     v-for="region in regions"
                     :key="region?.id"
+                    :value="region?.id"
                   >
-                    {{ region?.name?.uz }}</a-select-option
+                    {{ region?.name?.uz }}
+                  </a-select-option
                   >
                 </a-select>
               </a-form-model-item>
             </div>
             <div class="grid grid-cols-2 gap-6">
               <a-form-model-item
-                prop="lat"
                 class="form-item w-full mb-0"
                 label="Xaritada joylashuv uzunlik nuqtasi"
+                prop="lat"
               >
                 <a-input
-                  type="number"
                   v-model="form.lat"
-                  @change="currentLatLon"
                   placeholder="Uzunlik nuqtasini kiriting"
+                  type="number"
+                  @change="currentLatLon"
                 />
               </a-form-model-item>
               <a-form-model-item
-                prop="lon"
                 class="form-item w-full mb-0"
                 label="Xaritada joylashuv kenglik nuqtasi"
+                prop="lon"
               >
                 <a-input
-                  type="number"
                   v-model="form.lon"
-                  @change="currentLatLon"
                   placeholder="Kenglik nuqtasini kiriting"
+                  type="number"
+                  @change="currentLatLon"
                 />
               </a-form-model-item>
             </div>
             <a-form-model-item
-              prop="region_id"
               class="form-item w-full mb-0"
               label="Qo'shimcha xizmatlar"
+              prop="region_id"
             >
               <a-select
-                mode="multiple"
                 v-model="form.additional_services"
-                placeholder="Xizmatni tanlang..."
                 class="w-full"
+                mode="multiple"
+                placeholder="Xizmatni tanlang..."
               >
                 <a-select-option
-                  :value="service?.id"
                   v-for="service in services"
                   :key="service?.id"
+                  :value="service?.id"
                 >
-                  {{ service?.name?.uz }}</a-select-option
+                  {{ service?.name?.uz }}
+                </a-select-option
                 >
               </a-select>
             </a-form-model-item>
@@ -993,20 +1015,20 @@
           <!-- </a-form-model> -->
         </div>
         <div
-          class="map min-h-[350px] w-[50%] mx-auto"
           :class="{
             'pointer-events-none':
-              files?.status == 'accepted' || files?.status == 'rejected',
+              files?.status === 'accepted' || files?.status === 'rejected',
           }"
+          class="map min-h-[350px] w-[50%] mx-auto"
         >
           <yandex-map
-            @click="onClick"
             :coords="coords"
             :settings="mapSettings"
-            style="height: 350px"
             class="min-h-[350px]"
+            style="height: 350px"
+            @click="onClick"
           >
-            <ymap-marker :coords="coords" marker-id="123" hint-content="some hint" />
+            <ymap-marker :coords="coords" hint-content="some hint" marker-id="123"/>
           </yandex-map>
           <!-- <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.152394473258!2d69.24323909041384!3d41.32729942574873!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b711d027053%3A0x2ec050777a5a6873!2z0JPQsNC90LPQsA!5e0!3m2!1sru!2s!4v1700216322446!5m2!1sru!2s"
@@ -1019,62 +1041,63 @@
         ></iframe> -->
         </div>
         <div
-          class="buttons flex justify-center gap-6"
           v-if="
             files?.status != 'accepted' &&
             files?.status != 'rejected' &&
             ($store.state.profileInfo?.role == 'region_subadmin' ||
               $store.state.profileInfo?.role == 'region_admin')
           "
+          class="buttons flex justify-center gap-6"
         >
           <button
-            @click="visible = true"
             class="py-[13px] w-[366px] rounded-[8px] text-white bg-red-dark2 font-[verdana-400] text-base uppercase flex justify-center"
+            @click="visible = true"
           >
             Rad etish
           </button>
           <button
-            @click="submit('accept')"
             class="py-[13px] w-[366px] rounded-[8px] text-white bg-blue-bold font-[verdana-400] text-base uppercase flex justify-center"
+            @click="submit('accept')"
           >
             Tasdiqlash va reyestrga kiritish
           </button>
         </div>
       </div>
       <a-modal
-        class="close-modal"
         v-model="visible"
         :body-style="{ borderRadius: '20px' }"
-        centered
         :closable="false"
+        centered
+        class="close-modal"
         width="748px"
         @ok="handleOk"
       >
         <div>
           <div class="head">
             <h4 class="text-[24px] font-[verdana-700] text-blue-bold text-center mb-6">
-              Tasdiqlash va reyestrga kiritish
+              Rad etishingizga aminmisiz?
             </h4>
           </div>
           <div class="flex flex-col gap-3">
             <a-form-model-item
-              prop="reject_reasons"
               class="form-item w-full mb-0"
               label="Rad etish sabablari"
+              prop="reject_reasons"
             >
               <a-select
-                :disabled="reject_comment"
-                mode="multiple"
                 v-model="form.reject_reasons"
-                placeholder="Sabablarni tanlang..."
+                :disabled="reject_comment"
                 class="w-full"
+                mode="multiple"
+                placeholder="Sabablarni tanlang..."
               >
                 <a-select-option
-                  :value="reason?.id"
                   v-for="reason in reasons"
                   :key="reason?.id"
+                  :value="reason?.id"
                 >
-                  {{ reason?.name?.uz }}</a-select-option
+                  {{ reason?.name?.uz }}
+                </a-select-option
                 >
               </a-select>
             </a-form-model-item>
@@ -1083,28 +1106,28 @@
             >
             <a-form-model-item
               v-if="reject_comment"
-              prop="reject_text"
               class="form-item w-full mb-0"
               label="Rad etish sababi"
+              prop="reject_text"
             >
               <a-input
                 v-model="form.reject_text"
-                type="textarea"
-                rows="5"
                 placeholder="Sababni kiriting..."
+                rows="5"
+                type="textarea"
               />
             </a-form-model-item>
           </div>
           <div class="buttons grid grid-cols-2 gap-[30px] mt-4">
             <button
-              @click="handleOk"
               class="py-[13px] rounded-[8px] text-white bg-red-dark2 font-[verdana-400] text-base uppercase flex justify-center"
+              @click="handleOk"
             >
               Bekor qilish
             </button>
             <button
-              @click="submit('cancel')"
               class="py-[13px] rounded-[8px] text-white bg-blue-bold font-[verdana-400] text-base uppercase flex justify-center"
+              @click="submit('cancel')"
             >
               Ha, aminman
             </button>
@@ -1123,7 +1146,7 @@
         <div>
           <div class="head">
             <h4 class="text-[24px] font-[verdana-700] text-blue-bold text-center mb-6">
-              Rad etishingizga aminmisiz?
+          Tasdiqlash va reyestrga kiritish
             </h4>
           </div>
           <div class="flex flex-col gap-4">
@@ -1166,6 +1189,7 @@
           </div>
         </div>
       </a-modal> -->
+
     </a-form-model>
   </div>
 </template>
@@ -1184,26 +1208,25 @@ export default {
       visibleAccept: false,
       coords: [41.311081, 69.240562],
       regions: [],
-      form: {},
       info: {},
       files: {},
       rules: {
-        lat: [{ required: true, message: "This field is required", trigger: "change" }],
-        lon: [{ required: true, message: "This field is required", trigger: "change" }],
-        name: [{ required: true, message: "This field is required", trigger: "change" }],
+        lat: [{required: true, message: "This field is required", trigger: "change"}],
+        lon: [{required: true, message: "This field is required", trigger: "change"}],
+        name: [{required: true, message: "This field is required", trigger: "change"}],
         status: [
-          { required: true, message: "This field is required", trigger: "change" },
+          {required: true, message: "This field is required", trigger: "change"},
         ],
         reject_reasons: [
-          { required: true, message: "This field is required", trigger: "blur" },
+          {required: true, message: "This field is required", trigger: "blur"},
         ],
         reject_text: [
-          { required: true, message: "This field is required", trigger: "blur" },
+          {required: true, message: "This field is required", trigger: "blur"},
         ],
         address: {
-          ru: [{ required: true, message: "This field is required", trigger: "change" }],
-          uz: [{ required: true, message: "This field is required", trigger: "change" }],
-          en: [{ required: true, message: "This field is required", trigger: "change" }],
+          ru: [{required: true, message: "This field is required", trigger: "change"}],
+          uz: [{required: true, message: "This field is required", trigger: "change"}],
+          en: [{required: true, message: "This field is required", trigger: "change"}],
         },
       },
       services: [],
@@ -1249,23 +1272,23 @@ export default {
       if (type == "accept") {
         await delete this.rules["reject_reasons"];
         this.rules = {
-          lat: [{ required: true, message: "This field is required", trigger: "change" }],
-          lon: [{ required: true, message: "This field is required", trigger: "change" }],
+          lat: [{required: true, message: "This field is required", trigger: "change"}],
+          lon: [{required: true, message: "This field is required", trigger: "change"}],
           name: [
-            { required: true, message: "This field is required", trigger: "change" },
+            {required: true, message: "This field is required", trigger: "change"},
           ],
           status: [
-            { required: true, message: "This field is required", trigger: "change" },
+            {required: true, message: "This field is required", trigger: "change"},
           ],
           address: {
             ru: [
-              { required: true, message: "This field is required", trigger: "change" },
+              {required: true, message: "This field is required", trigger: "change"},
             ],
             uz: [
-              { required: true, message: "This field is required", trigger: "change" },
+              {required: true, message: "This field is required", trigger: "change"},
             ],
             en: [
-              { required: true, message: "This field is required", trigger: "change" },
+              {required: true, message: "This field is required", trigger: "change"},
             ],
           },
         };
@@ -1273,20 +1296,20 @@ export default {
         this.rules = {};
         if (!this.rules["reject_reasons"]) {
           this.rules.reject_reasons = await [
-            { required: true, message: "This field is required", trigger: "change" },
+            {required: true, message: "This field is required", trigger: "change"},
           ];
         }
       }
       if (this.reject_comment) {
         await delete this.rules["reject_reasons"];
         this.rules.reject_text = await [
-          { required: true, message: "This field is required", trigger: "blur" },
+          {required: true, message: "This field is required", trigger: "blur"},
         ];
         this.form.reject_reasons = [];
       } else {
         await delete this.rules["reject_text"];
         this.rules.reject_reasons = await [
-          { required: true, message: "This field is required", trigger: "blur" },
+          {required: true, message: "This field is required", trigger: "blur"},
         ];
         this.form.reject_text = "";
       }
@@ -1311,19 +1334,22 @@ export default {
       try {
         const data = await this.$store.dispatch("fetchRegions/getRegions");
         this.regions = data.data.data;
-      } catch (e) {}
+      } catch (e) {
+      }
     },
     async __GET_SERVICES() {
       try {
         const data = await this.$store.dispatch("fetchApplications/getServices");
         this.services = data.data;
-      } catch (e) {}
+      } catch (e) {
+      }
     },
     async __GET_REASONS() {
       try {
         const data = await this.$store.dispatch("fetchReasons/getReasons");
         this.reasons = data.data;
-      } catch (e) {}
+      } catch (e) {
+      }
     },
     handleChange(info) {
       const status = info.file.status;
@@ -1341,10 +1367,10 @@ export default {
         this.form.address = data?.data?.hotel?.address
           ? data?.data?.hotel?.address
           : {
-              uz: "",
-              en: "",
-              ru: "",
-            };
+            uz: "",
+            en: "",
+            ru: "",
+          };
         this.form.lat = data?.data?.hotel?.lat;
         this.form.lon = data?.data?.hotel?.lon;
         this.form.status = data?.data?.status;
@@ -1353,8 +1379,9 @@ export default {
         this.files = data?.data;
         this.info = data?.data?.hotel;
         this.user = data?.data?.user;
-        this.title = { ...data?.data?.hotel?.name };
-      } catch (e) {}
+        this.title = {...data?.data?.hotel?.name};
+      } catch (e) {
+      }
     },
     async __EDIT_APPLICATIONS(form, type) {
       try {
@@ -1393,10 +1420,12 @@ export default {
 :deep(.ant-checkbox-inner) {
   background-color: transparent;
 }
+
 /* form  */
 .form-item :deep(label::before) {
   display: none;
 }
+
 .form-item :deep(label) {
   font-family: var(--v-regular);
   color: #000;
@@ -1405,10 +1434,12 @@ export default {
   font-weight: 400;
   line-height: 150%; /* 24px */
 }
+
 .form-item :deep(.ant-form-item-label) {
   line-height: 0;
   margin-bottom: 6px;
 }
+
 .form-item :deep(.ant-input) {
   padding: 10px 20px;
   color: #5a5a5a;
@@ -1421,6 +1452,7 @@ export default {
   background-color: transparent;
   min-height: 50px;
 }
+
 .form-item :deep(.ant-select-selection--single),
 .form-item :deep(.ant-select-selection) {
   border-radius: 10px;
@@ -1435,32 +1467,39 @@ export default {
   /* display: flex;
   align-items: center; */
 }
+
 .form-item
-  :deep(.ant-select-selection--multiple .ant-select-selection__rendered > ul > li) {
+:deep(.ant-select-selection--multiple .ant-select-selection__rendered  ul  li) {
   height: 40px;
   display: flex;
   align-items: center;
 }
+
 .form-item :deep(.ant-select ul) {
   max-width: 100%;
 }
+
 .form-item :deep(.ant-select-selection__rendered) {
   height: 100%;
   display: flex;
   align-items: center;
 }
+
 :deep(.ant-form-item) {
   margin-bottom: 0;
 }
+
 /* form  */
 :deep(.ant-modal-body) {
   padding: 40px 45px;
 }
+
 :deep(.ant-modal-content) {
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(16px);
 }
+
 :deep(.ant-upload.ant-upload-drag) {
   background-color: transparent;
   border-radius: 6px;
