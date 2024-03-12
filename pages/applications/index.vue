@@ -97,10 +97,13 @@
           {{ text?.name > 0 ? text?.name : "----" }}
         </span>
         <span slot="end_date" slot-scope="text">
-          {{ text ? text : "----" }} 
+          {{ text ? text : "----" }}
         </span>
         <span slot="begin_date" slot-scope="text">
           {{ text ? moment(text).format("DD.MM.YYYY - HH:mm") : "----" }}
+        </span>
+        <span slot="deadline" slot-scope="text">
+          {{ text ? `${text} kun` : "Yakunlangan" }}
         </span>
       </a-table>
     </div>
@@ -187,6 +190,14 @@ export default {
           customRender: (text) => `${text?.region?.name?.uz}`,
         },
         {
+          title: "Muhlat",
+          dataIndex: "deadline",
+          key: "deadline",
+          slots: { title: "customTitle" },
+          scopedSlots: { customRender: "deadline" },
+          className: "column-text",
+        },
+        {
           title: "Ariza holati",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "status" },
@@ -220,7 +231,6 @@ export default {
         this.isLinkClicked = false;
       }
     },
-    moment,
     preventOne() {
       this.isLinkClicked = true;
     },
