@@ -165,6 +165,15 @@ export default {
         //   className: "column-text cursor-pointer",
         // },
         {
+          title: "Ariza raqami",
+          dataIndex: "task_id",
+          key: "task_id",
+          slots: { title: "customTitle" },
+          scopedSlots: { customRender: "task_id" },
+          className: "column-text cursor-pointer",
+
+        },
+        {
           title: "Ariza kelib tushgan sana",
           dataIndex: "created_at",
           key: "created_at",
