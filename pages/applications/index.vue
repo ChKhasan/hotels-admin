@@ -88,6 +88,7 @@
               'status-inactive': text.status == 'rejected',
               'status-progress': text.status == 'in_process',
               'status-success': text.status == 'accepted',
+                'status-inactive': text?.user_canceled
             }"
           >
             {{ text?.user_canceled ? 'MIJOZ TOMONDAN RAD ETILGAN':statusTypes[text.status] }}
@@ -103,7 +104,7 @@
           {{ text ? moment(text).format("DD.MM.YYYY - HH:mm") : "----" }}
         </span>
         <span slot="deadline" slot-scope="text">
-          {{ text ? `${text} kun` : "Yakunlangan" }}
+          {{ text?.deadline && !text?.user_canceled ? `${text?.deadline} kun` : "Yakunlangan" }}
         </span>
       </a-table>
     </div>
@@ -200,7 +201,6 @@ export default {
         },
         {
           title: "Muhlat",
-          dataIndex: "deadline",
           key: "deadline",
           slots: { title: "customTitle" },
           scopedSlots: { customRender: "deadline" },
