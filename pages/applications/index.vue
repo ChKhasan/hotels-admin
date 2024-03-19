@@ -85,10 +85,9 @@
           <span
             :class="{
               'status-new': text.status == 'new',
-              'status-inactive': text.status == 'rejected',
+              'status-inactive': text.status == 'rejected' || text?.user_canceled,
               'status-progress': text.status == 'in_process',
               'status-success': text.status == 'accepted',
-                'status-inactive': text?.user_canceled
             }"
           >
             {{ text?.user_canceled ? 'MIJOZ TOMONDAN RAD ETILGAN':statusTypes[text.status] }}
