@@ -951,7 +951,7 @@
                 <a-select
                   v-model="form.region_id"
                   class="w-full"
-                  placeholder="Toshkent shahri"
+                  placeholder="Hududni tanlang"
                 >
                   <a-select-option
                     v-for="region in regions"
