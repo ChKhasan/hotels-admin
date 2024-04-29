@@ -78,7 +78,7 @@
                   {{ hotelsActiveCount }}
                 </h6>
                 <p class="font-tt font-medium text-start text-base text-[#5D5D5F]">
-                  Xostellar soni
+                  Mehmon uylari soni
                 </p>
               </div>
               <!-- <div class="flex flex-col gap-2 items-center justify-between relative">
