@@ -257,7 +257,7 @@
             <div class="grid grid-cols-2 gap-6">
               <a
                 v-if="files?.state_certificate"
-                :href="`https://api.hotels.ndc.uz/${
+                :href="`${baseUrl}/${
                   files?.state_certificate.includes('storage')
                     ? files?.state_certificate
                     : `storage/${files?.state_certificate}`
@@ -293,7 +293,7 @@
                     </svg>
                   </p>
                   <a
-                    :href="`https://api.hotels.ndc.uz/${
+                    :href="`${baseUrl}/${
                       files?.cadastre.includes('storage')
                         ? files?.cadastre
                         : `storage/${files?.cadastre}`
@@ -393,7 +393,7 @@
               </a>
               <a
                 v-if="files?.cadastre"
-                :href="`https://api.hotels.ndc.uz/${
+                :href="`${baseUrl}/${
                   files?.cadastre.includes('storage')
                     ? files?.cadastre
                     : `storage/${files?.cadastre}`
@@ -524,7 +524,7 @@
             <div class="grid grid-cols-2 gap-6">
               <a
                 v-if="files?.sanitation"
-                :href="`https://api.hotels.ndc.uz/${
+                :href="`${baseUrl}/${
                   files?.sanitation.includes('storage')
                     ? files?.sanitation
                     : `storage/${files?.sanitation}`
@@ -654,7 +654,7 @@
               </a>
               <a
                 v-if="files?.fire_safety"
-                :href="`https://api.hotels.ndc.uz/${
+                :href="`${baseUrl}/${
                   files?.fire_safety.includes('storage')
                     ? files?.fire_safety
                     : `storage/${files?.fire_safety}`
@@ -785,7 +785,7 @@
             <!--            <div class="grid grid-cols-1 gap-6">-->
             <!--              <a-->
             <!--                v-if="files?.certificate?.link"-->
-            <!--                :href="`https://api.hotels.ndc.uz/${-->
+            <!--                :href="`${baseUrl}/${-->
             <!--                  files?.certificate?.link.includes('storage')-->
             <!--                    ? files?.certificate?.link-->
             <!--                    : `storage/${files?.certificate?.link}`-->
@@ -1256,6 +1256,9 @@ export default {
     };
   },
   computed: {
+    baseUrl() {
+      return process.env.baseUrl
+    },
     placeInfo() {
       let currentRegion = this.regions.find((item) => item.id === this.form.region_id);
       return currentRegion?.name?.uz;

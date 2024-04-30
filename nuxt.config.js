@@ -32,7 +32,9 @@ export default {
   },
   // "base url"
   components: true,
-
+  env: {
+    baseUrl: 'https://api.hotels.ndc.uz'
+  },
   buildModules: ["@nuxtjs/tailwindcss"],
 
   modules: ["@nuxtjs/axios"],

@@ -98,7 +98,7 @@
         "
       >
         <span slot="file" class="flex justify-center" slot-scope="text">
-          <a href="" @click="preventOne">
+          <a :href="text?.application?.certificate?.link" v-if="text?.deregistration_date === null" @click="preventOne" target="_blank">
             <svg
               width="28"
               height="28"
@@ -129,7 +129,7 @@
           </a>
         </span>
         <span slot="application" slot-scope="text">
-          <a :href="text?.register_number" @click="preventOne">
+          <a :href="`${baseUrl}/generate-application/${text?.application?.task_id}`" v-if="text?.deregistration_date === null" @click="preventOne" target="_blank">
             <svg
               width="28"
               height="28"
@@ -313,7 +313,6 @@ export default {
         },
         {
           title: "Kochirmani yuklab olish",
-          dataIndex: "file",
           key: "file",
           scopedSlots: { customRender: "file" },
           className: "cursor-pointer",
@@ -338,6 +337,11 @@ export default {
         },
       ],
     };
+  },
+  computed:{
+    baseUrl() {
+      return process.env.baseUrl
+    },
   },
   mounted() {
     this.__GET_HOTELS();
