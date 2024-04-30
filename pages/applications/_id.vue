@@ -1285,9 +1285,9 @@ export default {
       let data = {...this.form}
       if (form)
         data = {...data, ...form};
-      this.$refs[ruleForm].validate((valid) => {
+        ruleForm ? this.$refs[ruleForm].validate((valid) => {
         valid ? this.__EDIT_APPLICATIONS(data) : this.$notification["error"]({description: "Iltimos, ma'lumotlarini to'liq kiriting!"});
-      });
+      }):this.__EDIT_APPLICATIONS(data);
     },
     onClick(e) {
       this.coords = e.get("coords");
