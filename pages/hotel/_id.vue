@@ -59,42 +59,42 @@
 
 
        </a>
-      <button
-        v-if="$store.state.profileInfo.role == 'region_subadmin'"
-        @click="$router.push(`/hotel/edit/${info?.id}`)"
-        class="uppercase flex gap-[10px] px-6 h-[50px] border border-solid border-blue-bold bg-blue-bold rounded-[8px] justify-center items-center text-white font-[verdana-400] text-base"
-      >
-        Ma’lumotlarni o‘zgartirish
-        <svg
-          width="25"
-          height="24"
-          viewBox="0 0 25 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M8.5 12H16.5"
-            stroke="white"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M12.5 16V8"
-            stroke="white"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M9.5 22H15.5C20.5 22 22.5 20 22.5 15V9C22.5 4 20.5 2 15.5 2H9.5C4.5 2 2.5 4 2.5 9V15C2.5 20 4.5 22 9.5 22Z"
-            stroke="white"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </button>
+<!--      <button-->
+<!--        v-if="$store.state.profileInfo.role == 'region_subadmin'"-->
+<!--        @click="$router.push(`/hotel/edit/${info?.id}`)"-->
+<!--        class="uppercase flex gap-[10px] px-6 h-[50px] border border-solid border-blue-bold bg-blue-bold rounded-[8px] justify-center items-center text-white font-[verdana-400] text-base"-->
+<!--      >-->
+<!--        Ma’lumotlarni o‘zgartirish-->
+<!--        <svg-->
+<!--          width="25"-->
+<!--          height="24"-->
+<!--          viewBox="0 0 25 24"-->
+<!--          fill="none"-->
+<!--          xmlns="http://www.w3.org/2000/svg"-->
+<!--        >-->
+<!--          <path-->
+<!--            d="M8.5 12H16.5"-->
+<!--            stroke="white"-->
+<!--            stroke-width="1.5"-->
+<!--            stroke-linecap="round"-->
+<!--            stroke-linejoin="round"-->
+<!--          />-->
+<!--          <path-->
+<!--            d="M12.5 16V8"-->
+<!--            stroke="white"-->
+<!--            stroke-width="1.5"-->
+<!--            stroke-linecap="round"-->
+<!--            stroke-linejoin="round"-->
+<!--          />-->
+<!--          <path-->
+<!--            d="M9.5 22H15.5C20.5 22 22.5 20 22.5 15V9C22.5 4 20.5 2 15.5 2H9.5C4.5 2 2.5 4 2.5 9V15C2.5 20 4.5 22 9.5 22Z"-->
+<!--            stroke="white"-->
+<!--            stroke-width="1.5"-->
+<!--            stroke-linecap="round"-->
+<!--            stroke-linejoin="round"-->
+<!--          />-->
+<!--        </svg>-->
+<!--      </button>-->
       </div>
     </div>
     <div class="body mt-10 flex flex-col gap-10">

@@ -237,12 +237,12 @@ export default {
       json_fields: {
         "№": "index",
         "Hudud nomi": {
-          field: "region.name.ru",
+          field: "region.name.uz",
         },
         "Xususiy yoki oilaviy tadbirkorlik subyekti (arizachining nomi)": "director_full_name",
         "Oilaviy mehmon uyi nomi": "name",
         STIR: "tin",
-        "Shahar tuman nomi": "region.name.ru",
+        "Shahar tuman nomi": "region.name.uz",
         "Oilaviy mehmon uyi manzili (Joylashgan joyi)": "address.uz",
         "Individual reester raqami": "register_number",
         "Yagona Reesterga kiritilgan sana": "entry_date",
@@ -256,7 +256,7 @@ export default {
         "Yaratilgan ish o'rinlari": "empty",
         '"E-mehmon" dasturiga ulanganligi': "empty",
         Izoh: "empty",
-        
+
       },
       isLinkClicked: false,
       hotels: [],
