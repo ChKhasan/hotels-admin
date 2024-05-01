@@ -122,7 +122,7 @@
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
-            <p class="text-white font-[verdana-400] text-base">Tashkilot yuridik nomi</p>
+            <p class="text-white font-[verdana-400] text-base">Tashkilot yuridik nomi <span v-if="userType === 'I'">(YaTT)</span></p>
             <h5 class="text-[24px] text-white font-bold">
               {{ info?.legal_name || emptyText }}
             </h5>
@@ -186,7 +186,8 @@
               Oilaviy mehmon uyi rahbari
             </p>
             <h5 class="text-[24px] text-white font-bold">
-              {{ user?.full_name || emptyText }}
+              <span v-if="user?.full_name">"{{user?.full_name}}" <span v-if="userType === 'I'">YaTT</span></span>
+              <span v-else>{{emptyText}}</span>
             </h5>
           </div>
           <div
@@ -1253,9 +1254,14 @@ export default {
         reject_reasons: [],
       },
       user: {},
+      fullInfo: {}
     };
   },
   computed: {
+    userType() {
+      console.log(this.info)
+      return this.fullInfo?.my_gov_application?.res?.entities?.CreatefamilyGuestHousesHostels?.user_type?.real_value
+    },
     baseUrl() {
       return process.env.baseUrl
     },
@@ -1332,6 +1338,7 @@ export default {
       try {
 
         const data = await this.$store.dispatch("fetchApplications/getAppById", id);
+        this.fullInfo = data?.data;
         let hotel = data?.data?.hotel
         this.files = data?.data;
         let newApplication = data?.data?.pipe_status_changes?.find(elem => elem.changes.pipe_status === 40)
