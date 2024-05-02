@@ -34,7 +34,7 @@
     </div>
     <div class="body mt-10 flex flex-col gap-10">
       <div class="title w-full flex justify-center bg-blue-grey py-[10px] rounded-[10px]">
-        <h1 class="font-[verdana-700] text-[24px] text-white">Xostel ma’lumotlari</h1>
+        <h1 class="font-[verdana-700] text-[24px] text-white">Mehmon uyi ma’lumotlari</h1>
       </div>
       <div class="grid grid-cols-2 gap-6">
         <div

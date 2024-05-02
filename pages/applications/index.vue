@@ -170,14 +170,14 @@ export default {
         },
         // {
         //   title: "Reyestr raqami",
-        //   dataIndex: "register_number",
-        //   key: "register_number",
-        //   key: "register_number",
+        //   dataIndex: "formatted_register_number",
+        //   key: "formatted_register_number",
+        //   key: "formatted_register_number",
         //   customRender: (text) => {
         //     return text || "---";
         //   },
         //   slots: { title: "customTitle" },
-        //   scopedSlots: { customRender: "register_number" },
+        //   scopedSlots: { customRender: "formatted_register_number" },
         //   className: "column-text cursor-pointer",
         // },
         // {

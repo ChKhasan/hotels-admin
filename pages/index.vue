@@ -244,7 +244,7 @@ export default {
         STIR: "tin",
         "Shahar tuman nomi": "region.name.uz",
         "Oilaviy mehmon uyi manzili (Joylashgan joyi)": "address.uz",
-        "Individual reester raqami": "register_number",
+        "Individual reester raqami": "formatted_register_number",
         "Yagona Reesterga kiritilgan sana": "entry_date",
         "Xonalar soni": "rooms",
         "O'rinlar soni": "places",
@@ -273,13 +273,13 @@ export default {
         },
         {
           title: "Reyestr raqami",
-          dataIndex: "register_number",
-          key: "register_number",
+          dataIndex: "formatted_register_number",
+          key: "formatted_register_number",
           customRender: (text) => {
             return text || "---";
           },
           slots: { title: "customTitle" },
-          scopedSlots: { customRender: "register_number" },
+          scopedSlots: { customRender: "formatted_register_number" },
           className: "column-text cursor-pointer",
         },
         // {

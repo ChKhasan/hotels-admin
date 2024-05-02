@@ -958,7 +958,7 @@
               <a-form-model-item
              
                 class="form-item w-full mb-0"
-                label="Xostel joylashgan hudud"
+                label="Mehmon uyi joylashgan hudud"
                 prop="region_id"
               >
                 <a-select
@@ -1008,7 +1008,13 @@
               label="Qo'shimcha xizmatlar"
               prop="region_id"
             >
-              <a-select
+            <a-input
+                  v-model="form.additional_services"
+                  placeholder="Xizmatni kiriting..."
+                  type="text"
+                  @change="currentLatLon"
+                />
+              <!-- <a-select
                 v-model="form.additional_services"
                 class="w-full"
                 mode="multiple"
@@ -1022,7 +1028,7 @@
                   {{ service?.name?.uz }}
                 </a-select-option
                 >
-              </a-select>
+              </a-select> -->
             </a-form-model-item>
           </div>
           <!-- </a-form-model> -->
@@ -1256,7 +1262,7 @@ export default {
           en: "",
           uz: "",
         },
-        additional_services: [],
+        additional_services: "",
         reject_reasons: [],
       },
       user: {},
