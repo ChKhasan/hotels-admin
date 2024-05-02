@@ -1012,7 +1012,6 @@
                   v-model="form.additional_services"
                   placeholder="Xizmatni kiriting..."
                   type="text"
-                  @change="currentLatLon"
                 />
               <!-- <a-select
                 v-model="form.additional_services"
