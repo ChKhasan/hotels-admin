@@ -122,9 +122,10 @@
           <div
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
-            <p class="text-white font-[verdana-400] text-base">Tashkilot yuridik nomi <span v-if="userType === 'I'">(YaTT)</span></p>
+            <p class="text-white font-[verdana-400] text-base">Tashkilot yuridik nomi </p>
             <h5 class="text-[24px] text-white font-bold">
-              {{ info?.legal_name || emptyText }}
+              <span v-if="info?.legal_name">"{{info?.legal_name}}" <span v-if="userType === 'I'">YaTT</span></span>
+              <span v-else>{{emptyText}}</span>
             </h5>
           </div>
           <div
@@ -186,7 +187,7 @@
               Oilaviy mehmon uyi rahbari
             </p>
             <h5 class="text-[24px] text-white font-bold">
-              <span v-if="user?.full_name">"{{user?.full_name}}" <span v-if="userType === 'I'">YaTT</span></span>
+              <span v-if="user?.full_name">{{user?.full_name}}</span>
               <span v-else>{{emptyText}}</span>
             </h5>
           </div>
@@ -951,6 +952,7 @@
                 <a-input v-model="form.name" placeholder="Lokomotiv hostel" />
               </a-form-model-item> -->
               <a-form-model-item
+             
                 class="form-item w-full mb-0"
                 label="Xostel joylashgan hudud"
                 prop="region_id"
@@ -1270,8 +1272,8 @@ export default {
       return currentRegion?.name?.uz;
     },
   },
-  mounted() {
-    this.__GET_APPLICATIONS(this.$route.params.id);
+ async mounted() {
+   await this.__GET_APPLICATIONS(this.$route.params.id);
     this.__GET_REGIONS();
     this.__GET_SERVICES();
     this.__GET_REASONS();
@@ -1356,7 +1358,7 @@ export default {
         this.form.lat = hotel?.lat;
         this.form.lon = hotel?.lon;
         this.form.status = this.files?.status;
-        this.form.region_id = hotel?.region_id;
+        this.form.region_id = hotel?.region_id * 1;
         this.info = hotel;
         this.user = this.files?.user;
         this.title = {...hotel?.name};
