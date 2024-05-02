@@ -123,8 +123,12 @@
             class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
           >
             <p class="text-white font-[verdana-400] text-base">Tashkilot yuridik nomi </p>
-            <h5 class="text-[24px] text-white font-bold">
-              <span v-if="info?.legal_name">"{{info?.legal_name}}" <span v-if="userType === 'I'">YaTT</span></span>
+            <h5 class="text-[24px] text-white font-bold" v-if="userType === 'I'">
+              <span v-if="user?.full_name">"{{user?.full_name}}" YaTT</span>
+              <span v-else>{{emptyText}}</span>
+            </h5>
+            <h5 class="text-[24px] text-white font-bold" v-else>
+              <span v-if="info?.legal_name">{{info?.legal_name}}</span>
               <span v-else>{{emptyText}}</span>
             </h5>
           </div>
@@ -1261,7 +1265,6 @@ export default {
   },
   computed: {
     userType() {
-      console.log(this.info)
       return this.fullInfo?.my_gov_application?.res?.entities?.CreatefamilyGuestHousesHostels?.user_type?.real_value
     },
     baseUrl() {

@@ -108,7 +108,12 @@
           class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
         >
           <p class="text-white font-[verdana-400] text-base">Oilaviy mehmon uyi nomi</p>
-          <h5 class="text-[24px] text-white font-bold">{{ info?.name }}</h5>
+          <h5 class="text-[24px] text-white font-bold" v-if="!info?.tin">
+              <span v-if="info?.director_full_name">"{{info?.director_full_name}}" YaTT</span>
+            </h5>
+            <h5 class="text-[24px] text-white font-bold" v-else>
+              <span v-if="info?.legal_name">{{info?.legal_name}}</span>
+            </h5>
         </div>
         <div
           class="px-[30px] rounded-[6px] py-[30px] min-h-[150px] justify-between flex flex-col bg-blue-bold"
@@ -344,9 +349,13 @@ export default {
       coords: [],
       form: {},
       visible: false,
+      fullInfo: {}
     };
   },
   computed:{
+    userType() {
+      return this.info?.application?.my_gov_application?.res?.entities?.CreatefamilyGuestHousesHostels?.user_type?.real_value
+    },
     baseUrl() {
       return process.env.baseUrl
     },
