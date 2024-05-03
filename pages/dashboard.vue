@@ -62,7 +62,7 @@
           class="map-block border-[0] border-l border-solid border-[#EBEBEB] flex flex-col justify-between"
         >
           <div class="2xl:px-[100px] pt-12 px-12">
-            <Map @mapHandle="mapClick" :currentRegion="activeRegion" />
+            <Map @mapHandle="mapClick" :currentRegion="activeRegion"/>
           </div>
           <div class="map-infos flex flex-col mt-10 gap-6">
             <div class="px-10">
@@ -158,7 +158,7 @@
             </h1>
             <download-excel
               class="btn btn-default"
-              :data="dashboard.applications"
+              :data="applications"
               :fields="json_fields"
               worksheet="My Worksheet"
               name="statistic_bnb.xls"
@@ -381,17 +381,17 @@
                 <li
                   class="px-4 py-2 rounded-t-[8px] border flex items-center justify-center border-solid border-[#E9ECEF] bg-[#e5e8ec] font-tt text-[#A4ABB6] text-[14px] font-semibold text-center"
                 >
-                Ariza kamchiliklari
+                  Ariza kamchiliklari
                 </li>
                 <li
                   class="px-4 py-2 rounded-t-[8px] border flex items-center justify-center border-solid border-[#E9ECEF] bg-[#deebf4] font-tt text-[#2DCCFF] text-[14px] font-semibold text-center"
                 >
-                Mehmon uyi kamchiliklari
+                  Mehmon uyi kamchiliklari
                 </li>
               </ul>
             </div>
             <div class="table-body">
-              <div v-for="(region, index) in dashboard.applications" :key="region.id">
+              <div v-for="(region, index) in applications" :key="region.id">
                 <ul class="grid grid-cols-9 gap-2">
                   <li
                     class="h-10 px-4 flex items-center bg-[#FAFAFC] border-[0] border-t border-solid border-[#E9ECEF] text-[12px] text-[#020105] font-medium font-tt"
@@ -437,7 +437,7 @@
                     class="h-10 px-4 flex items-center border border-solid border-[#E9ECEF] text-[12px] text-[#212529] justify-center font-tt"
                   >
                     {{ region?.hotel_flaws }}
-                  </li> 
+                  </li>
                 </ul>
               </div>
               <!-- <ul v-for="elem in [1, 2, 3, 4, 5, 6]" :key="elem">
@@ -458,12 +458,13 @@
 </template>
 <script>
 import Map from "./map.vue";
+
 export default {
   data() {
     return {
       json_fields: {
         "Viloyat nomi": {
-          field: "region.name.ru",
+          field: "region.name.uz",
         },
         "Ko‘rib chiqish muddati yaqinlashdi": "warning",
         "Ko‘rib chiqish muddati kechikdi": "danger",
@@ -471,8 +472,9 @@ export default {
         "Ko‘rib chiqilmoqda": "in_process",
         "Muvaffaqiyatli yakunlandi": "accepted",
         "Rad etildi": "rejected",
+        "Ariza kamchiliklari": "doc_flaws",
+        "Mehmon uyi kamchiliklari": 'hotel_flaws'
       },
-
       json_meta: [
         [
           {
@@ -549,6 +551,7 @@ export default {
         applications: [],
         hotels: [],
       },
+      applications: []
     };
   },
   computed: {
@@ -569,8 +572,8 @@ export default {
       window.open(blobUrl, "_blank");
     },
     AplicationstotalCount() {
-      if (this.dashboard?.applications?.length > 0) {
-        return this.dashboard?.applications?.reduce((sum, item) => {
+      if (this.applications?.length > 0) {
+        return this.applications?.reduce((sum, item) => {
           return (
             sum +
             (item?.accepted +
@@ -593,6 +596,15 @@ export default {
   methods: {
     async mapClick(val) {
       this.activeRegion = val;
+      if (val === 8888) {
+        this.applications = this.dashboard.applications
+      } else {
+        this.applications = this.dashboard.applications.filter(
+          (item) => item.region.id === val
+        );
+      }
+      this.generateCount()
+
     },
     // async __GET_DASHBOARD() {
     //   try {
@@ -648,29 +660,70 @@ export default {
     //     this.activeTab = this.dashboard?.hotels[0]?.title?.id;
     //   } catch (e) {}
     // },
+
     async __GET_REGIONS() {
       try {
         const data = await this.$store.dispatch("fetchRegions/getRegions");
         this.regions = data.data.data;
         if (this.$store.state.profileInfo?.region_id) {
           this.regions = this.regions.filter(
-            (item) => item.id == this.$store.state.profileInfo?.region_id
+            (item) => item.id == this.$store.state.profileInfo?.region_id || item.region.id === 9999
           );
         }
         this.activeRegion = this.regions[0]?.id;
-      } catch (e) {}
+      } catch (e) {
+      }
+    },
+    generateCount() {
+      let totalCounts = {
+        region: {
+          id: 9999,
+          name: {
+            uz: "Jami",
+            ru: "Jami",
+            en: "Jami"
+          }
+        },
+        warning: 0,
+        danger: 0,
+        new: 0,
+        in_process: 0,
+        accepted: 0,
+        rejected: 0,
+        doc_flaws: 0,
+        hotel_flaws: 0
+      };
+      this.applications.forEach(item => {
+        totalCounts.warning += item.warning;
+        totalCounts.danger += item.danger;
+        totalCounts.new += item.new;
+        totalCounts.in_process += item.in_process;
+        totalCounts.accepted += item.accepted;
+        totalCounts.rejected += item.rejected;
+        totalCounts.doc_flaws += item.doc_flaws;
+        totalCounts.hotel_flaws += item.hotel_flaws;
+      });
+      let totalWithRegion = this.applications.find(item => item.region.id === 9999)
+      if (totalWithRegion) {
+        totalWithRegion = {...totalCounts}
+      } else {
+        this.applications.push(totalCounts);
+      }
+
     },
     async __GET_DASHBOARD() {
       try {
         const data = await this.$store.dispatch("fetchDashboard/getDashboard");
         this.dashboard = data?.data;
+        this.applications = this.dashboard?.applications
+        this.generateCount()
 
         if (this.$store.state.profileInfo?.region_id) {
           this.dashboard.hotels = this.dashboard?.hotels.filter(
             (item) => item.region.id == this.$store.state.profileInfo?.region_id
           );
-          this.dashboard.applications = this.dashboard.applications.filter(
-            (item) => item.region.id == this.$store.state.profileInfo?.region_id
+          this.applications = this.dashboard.applications.filter(
+            (item) => item.region.id == this.$store.state.profileInfo?.region_id || item.region.id === 9999
           );
         } else {
           const allRegions = this.dashboard?.hotels?.reduce(
@@ -699,7 +752,8 @@ export default {
           this.dashboard?.hotels.unshift(allRegions);
         }
         this.activeRegion = this.dashboard?.hotels[0]?.region?.id;
-      } catch (e) {}
+      } catch (e) {
+      }
     },
     // async __GET_REGIONS() {
     //   try {
@@ -719,6 +773,7 @@ export default {
 .font-tt {
   font-family: "TT Interfaces";
 }
+
 .bg-yellow10 {
   background: rgba(236, 228, 28, 0.1);
 }
@@ -727,16 +782,19 @@ export default {
   background: #000 !important;
   color: #fff !important;
 }
+
 .active {
   /* background: var(--blue-bold); */
   /* color: #fff; */
   color: #0808ff;
 }
+
 .map-container {
   display: grid;
   grid-template-columns: 266px 1fr;
   gap: 8px;
 }
+
 .form-item :deep(.ant-select-selection--single),
 .form-item :deep(.ant-select-selection) {
   border-radius: 10px;
@@ -751,11 +809,13 @@ export default {
   /* display: flex;
   align-items: center; */
 }
+
 .form-item :deep(.ant-select-selection__rendered) {
   height: 100%;
   display: flex;
   align-items: center;
 }
+
 .form-item :deep(label) {
   font-family: var(--v-bold);
   color: var(--blue-bold);
@@ -763,13 +823,16 @@ export default {
   font-style: normal;
   line-height: 150%; /* 24px */
 }
+
 .form-item :deep(.ant-form-item-label) {
   line-height: 0;
   margin-bottom: 6px;
 }
+
 .form-item :deep(label::after) {
   display: none;
 }
+
 .form-item :deep(.ant-select-selection__placeholder) {
   color: #413f3f;
   font-family: var(--v-regular);
@@ -777,6 +840,7 @@ export default {
   font-style: normal;
   line-height: 150%; /* 24px */
 }
+
 :deep(.apexcharts-yaxis-label),
 :deep(.apexcharts-xaxis-label) {
   color: #161515;

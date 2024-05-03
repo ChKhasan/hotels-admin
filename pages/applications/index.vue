@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[1536px] mx-auto py-10">
+  <div class=" mx-auto py-10">
     <div class="search mb-[60px]">
       <div
         class="rounded-[10px] search-block border border-solid relative flex items-center"
@@ -54,7 +54,7 @@
           }
         "
       >
-      <span slot="certificate" class="flex justify-center" slot-scope="text"> 
+      <span slot="certificate" class="flex justify-center" slot-scope="text">
       <a v-if="text" :href="text.link" target="_blank" @click="preventOne">
          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="28" height="28" rx="14" fill="white"/>
@@ -74,7 +74,7 @@
                 <path d="M11.5 14H18.1667" stroke="#28303F" stroke-width="1.5" stroke-linecap="round"/>
                 <path d="M11.5 18.1665H14.8333" stroke="#28303F" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
-          </a> 
+          </a>
         </span>
         <!-- <span slot="certificate" slot-scope="text">
           <a v-if="text" :href="text.link" @click="preventOne" class="flex justify-end"
