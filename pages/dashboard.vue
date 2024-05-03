@@ -369,16 +369,6 @@
                   Ko‘rib chiqilmoqda
                 </li>
                 <li
-                  class="px-4 py-2 rounded-t-[8px] border flex items-center justify-center border-solid border-[#E9ECEF] bg-[#EBEBFD] font-tt text-[#5D5FEF] text-[14px] font-semibold text-center"
-                >
-                  Muvaffaqiyatli yakunlandi
-                </li>
-                <li
-                  class="px-4 py-2 rounded-t-[8px] border flex items-center justify-center border-solid border-[#E9ECEF] bg-[#FCEAEA] font-tt text-[#EB5757] text-[14px] font-semibold text-center"
-                >
-                  Rad etildi
-                </li>
-                <li
                   class="px-4 py-2 rounded-t-[8px] border flex items-center justify-center border-solid border-[#E9ECEF] bg-[#e5e8ec] font-tt text-[#A4ABB6] text-[14px] font-semibold text-center"
                 >
                   Ariza kamchiliklari
@@ -388,6 +378,17 @@
                 >
                   Mehmon uyi kamchiliklari
                 </li>
+                <li
+                  class="px-4 py-2 rounded-t-[8px] border flex items-center justify-center border-solid border-[#E9ECEF] bg-[#EBEBFD] font-tt text-[#5D5FEF] text-[14px] font-semibold text-center"
+                >
+                  Muvaffaqiyatli yakunlandi
+                </li>
+                <li
+                  class="px-4 py-2 rounded-t-[8px] border flex items-center justify-center border-solid border-[#E9ECEF] bg-[#FCEAEA] font-tt text-[#EB5757] text-[14px] font-semibold text-center"
+                >
+                  Rad etildi
+                </li>
+
               </ul>
             </div>
             <div class="table-body">
@@ -421,16 +422,6 @@
                   <li
                     class="h-10 px-4 flex items-center border border-solid border-[#E9ECEF] text-[12px] text-[#212529] justify-center font-tt"
                   >
-                    {{ region?.accepted }}
-                  </li>
-                  <li
-                    class="h-10 px-4 flex items-center border border-solid border-[#E9ECEF] text-[12px] text-[#212529] justify-center font-tt"
-                  >
-                    {{ region?.rejected }}
-                  </li>
-                  <li
-                    class="h-10 px-4 flex items-center border border-solid border-[#E9ECEF] text-[12px] text-[#212529] justify-center font-tt"
-                  >
                     {{ region?.doc_flaws }}
                   </li>
                   <li
@@ -438,6 +429,17 @@
                   >
                     {{ region?.hotel_flaws }}
                   </li>
+                  <li
+                    class="h-10 px-4 flex items-center border border-solid border-[#E9ECEF] text-[12px] text-[#212529] justify-center font-tt"
+                  >
+                    {{ region?.accepted }}
+                  </li>
+                  <li
+                    class="h-10 px-4 flex items-center border border-solid border-[#E9ECEF] text-[12px] text-[#212529] justify-center font-tt"
+                  >
+                    {{ region?.rejected }}
+                  </li>
+
                 </ul>
               </div>
               <!-- <ul v-for="elem in [1, 2, 3, 4, 5, 6]" :key="elem">
