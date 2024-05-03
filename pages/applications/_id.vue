@@ -956,7 +956,7 @@
                 <a-input v-model="form.name" placeholder="Lokomotiv hostel" />
               </a-form-model-item> -->
               <a-form-model-item
-             
+
                 class="form-item w-full mb-0"
                 label="Mehmon uyi joylashgan hudud"
                 prop="region_id"
@@ -1363,6 +1363,7 @@ export default {
             en: "",
             ru: "",
           };
+        this.form.additional_services = hotel?.add_services
         this.form.lat = hotel?.lat;
         this.form.lon = hotel?.lon;
         this.form.status = this.files?.status;
