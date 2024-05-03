@@ -174,10 +174,10 @@ export default {
         historyDateFormatter(statusHistory(110)?.created_at || statusHistory(90)?.created_at):
         appUpdateDate}`"
     >
-  
+
       <div class="flex flex-col gap-3 my-4">
-        <p class="verdana-400 text-base">Sababi: Quyidagi dalolatnoma asosida mehmon uyi kamchiliklari bartaraf
-          etilmadi</p>
+<!--        <p class="verdana-400 text-base">Sababi: Quyidagi dalolatnoma asosida mehmon uyi kamchiliklari bartaraf-->
+<!--          etilmadi</p>-->
         <a-form-model class="w-full" :model="formComplete" ref="ruleFormLast">
           <div class="flex gap-4 mt-4">
             <a-form-model-item
